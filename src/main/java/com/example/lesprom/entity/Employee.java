@@ -9,26 +9,27 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "order_on_create")
+@Table(name = "employee")
 @Getter
 @Setter
 @NoArgsConstructor
-public class Order {
+public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "number_order")
-    private Integer numberOrder;
+    @Column(name = "full_name")
+    private String fullName;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<TimeOfEmployeeOnOrder> timeOfEmployeeOnOrders = new HashSet<>();
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
-    @JoinTable(name = "order_workplace",
-            joinColumns = @JoinColumn(name = "id_order", foreignKey = @ForeignKey(name = "buffer_order_fk")),
+    @JoinTable(name = "employee_workplace",
+            joinColumns = @JoinColumn(name = "id_employee", foreignKey = @ForeignKey(name = "buffer_employee_fk")),
             inverseJoinColumns = @JoinColumn(name = "id_workplace", foreignKey = @ForeignKey(name = "buffer_workplace_fk")))
     private Set<Workplace> workplaces = new HashSet<>();
+
 }
