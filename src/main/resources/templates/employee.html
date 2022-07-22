@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee</title>
+    <link rel="stylesheet" th:href="@{./../static/css/style.css}">
+</head>
+<body>
+
+<div th:insert="~{header :: header}"></div>
+
+<div th:fragment="employee_fragment">
+    <a href="employee/new">New employee</a>
+    <h3>Employees list</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <div th:fragment="employee_thead_fragment">
+                <th>id</th>
+                <th>Full name</th>
+                <th>Workplace</th>
+                <th colspan="2">Edit</th>
+            </div>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="employee : ${employeeList}">
+            <td th:text="${employee.getId()}"></td>
+            <td th:text="${employee.getRole()}"></td>
+
+            <td><a th:href="@{/employee/{id}(id=${employee.getId()})}">Edit</a></td>
+            <td>
+                <form th:action="@{/employee/{id}(id=${employee.getId()})}" method="post">
+                    <input type="submit" value="Del"/>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee edit</title>
+</head>
+<body>
+
+<table class="table">
+    <caption><h3>Employee edit</h3></caption>
+    <tr>
+        <div th:insert="~{employee :: employee_thead_fragment}"></div>
+    </tr>
+    <form action="#" th:action="@{/employee}" th:object="${employee}" method="post">
+        <tr>
+            <input type="hidden" th:field="*{id}" name="id"/>
+            <th th:text="${(employee.getId()!=0) ? employee.getId() : ''}"></th>
+            <th><input type="text" th:field="*{fullName}"/></th>
+            <!--добавить листбоксы с выбором участка и заказа-->
+
+            <th><input type="submit" value="Save"/></th>
+            <th><input type="reset" value="Cancel"/></th>
+        </tr>
+    </form>
+
+</table>
+</body>
+</html>

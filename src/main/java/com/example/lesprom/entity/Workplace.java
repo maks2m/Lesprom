@@ -21,7 +21,7 @@ public class Workplace {
     private Long id;
 
     @Column(name = "name_workplace")
-    private Long nameWorkplace;
+    private String nameWorkplace;
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinTable(name = "employee_workplace",

@@ -1,7 +1,10 @@
 package com.example.lesprom.repo;
 
-import com.example.lesprom.entity.Сutter;
+import com.example.lesprom.entity.Cutter;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CutterRepo extends JpaRepository<Сutter, Long> {
+import java.util.List;
+
+public interface CutterRepo extends JpaRepository<Cutter, Long> {
+    List<Cutter> findAllByOrderById();
 }

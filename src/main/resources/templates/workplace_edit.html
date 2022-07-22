@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Workplace edit</title>
+</head>
+<body>
+
+<table class="table">
+    <caption><h3>Workplace edit</h3></caption>
+    <tr>
+        <div th:insert="~{workplace :: workplace_thead_fragment}"></div>
+    </tr>
+    <form action="#" th:action="@{/workplace}" th:object="${workplace}" method="post">
+        <tr>
+            <input type="hidden" th:field="*{id}" name="id"/>
+            <th th:text="${(workplace.getId()!=0) ? workplace.getId() : ''}"></th>
+            <th><input type="text" th:field="*{nameWorkplace}"/></th>
+
+            <th><input type="submit" value="Save"/></th>
+            <th><input type="reset" value="Cancel"/></th>
+        </tr>
+    </form>
+
+</table>
+</body>
+</html>

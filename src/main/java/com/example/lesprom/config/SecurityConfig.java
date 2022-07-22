@@ -1,5 +1,7 @@
 package com.example.lesprom.config;
 
+import com.example.lesprom.entity.User;
+import com.example.lesprom.entity.UserDetailsImpl;
 import com.example.lesprom.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,7 +23,10 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService(UserService userService) {
-        return userService::findByUsername;
+        return username -> {
+            User user = userService.findByUsername(username);
+            return new UserDetailsImpl(user);
+        };
     }
 
     @Bean

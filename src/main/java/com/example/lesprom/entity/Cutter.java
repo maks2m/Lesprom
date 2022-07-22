@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Setter
 @Getter
 @NoArgsConstructor
-public class Сutter {
+public class Cutter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

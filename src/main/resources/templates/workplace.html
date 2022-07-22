@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Workplace</title>
+    <link rel="stylesheet" th:href="@{./../static/css/style.css}">
+</head>
+<body>
+
+<div th:insert="~{header :: header}"></div>
+
+<div th:fragment="workplace_fragment">
+    <a href="workplace/new">New workplace</a>
+    <h3>Workplaces list</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <div th:fragment="workplace_thead_fragment">
+                <th>id</th>
+                <th>Name Workplace</th>
+                <th colspan="2">Edit</th>
+            </div>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="workplace : ${workplaceList}">
+            <td th:text="${workplace.getId()}"></td>
+            <td th:text="${workplace.getNameWorkplace()}"></td>
+
+            <td><a th:href="@{/workplace/{id}(id=${workplace.getId()})}">Edit</a></td>
+            <td>
+                <form th:action="@{/workplace/{id}(id=${workplace.getId()})}" method="post">
+                    <input type="submit" value="Del"/>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
