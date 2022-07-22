@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,7 +33,8 @@ public class UserService {
     }
 
     public List<User> list() {
-        return userRepo.findAllByOrderById();
+        List<User> allByOrderById = userRepo.findAllByOrderById();
+        return allByOrderById;
     }
 
     public User create() {
@@ -41,6 +43,10 @@ public class UserService {
 
     public User getById(Long id) {
         return userRepo.findById(id).orElseThrow(NotFoundException::new);
+    }
+
+    public User findByUsername(String username) {
+        return userRepo.findByUsername(username).orElseThrow(NotFoundException::new);
     }
 
     public boolean save(Long id, Map<String, String> mapModel, Model model) {

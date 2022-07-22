@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div th:fragment="header">
+    <table class="table_header">
+        <tr>
+            <td><a href="/">Index</a></td>
+            <td><a href="/order">Orders</a></td>
+            <td><a href="/baguette">Baguettes</a></td>
+            <td><a href="/cutter">Cutters</a></td>
+            <td><a href="/workplace">Workplaces</a></td>
+            <td><a href="/employee">Employees</a></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td th:inline="text">[[${#httpServletRequest.remoteUser}]]</td>
+            <td>
+                <div th:if="${#httpServletRequest.remoteUser}">
+                    <form th:action="@{/logout}" method="post">
+                        <input type="submit" value="Sign Out"/>
+                    </form>
+                </div>
+            </td>
+            <td sec:authorize="hasAuthority('ADMIN')"><a href="/user">Users</a></td>
+            <td sec:authorize="hasAuthority('ADMIN')"><a href="/role">Roles</a></td>
+        </tr>
+    </table>
+    <br><br>
+</div>
+</body>
+</html>
