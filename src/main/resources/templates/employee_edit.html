@@ -11,12 +11,24 @@
     <tr>
         <div th:insert="~{employee :: employee_thead_fragment}"></div>
     </tr>
-    <form action="#" th:action="@{/employee}" th:object="${employee}" method="post">
+
+    <form th:action="@{/employee}" method="post">
         <tr>
-            <input type="hidden" th:field="*{id}" name="id"/>
+
+            <input type="hidden" th:value="${(employee.getId()!=0) ? employee.getId() : ''}" name="id"/>
             <th th:text="${(employee.getId()!=0) ? employee.getId() : ''}"></th>
-            <th><input type="text" th:field="*{fullName}"/></th>
-            <!--добавить листбоксы с выбором участка и заказа-->
+
+            <th><input type="text" th:value="${employee.getFullName()}" name="FullName" size=""/></th>
+
+            <th>
+                <select th:size="10" th:name="selectedWorkplaces" multiple>
+                    <option th:each="workplace : ${workplaces}"
+                            th:text="${workplace.getNameWorkplace()}"
+                            th:value="${workplace.getId()}"
+                            th:selected="${selectedWorkplaces.contains(workplace)}">
+                    </option>
+                </select>
+            </th>
 
             <th><input type="submit" value="Save"/></th>
             <th><input type="reset" value="Cancel"/></th>

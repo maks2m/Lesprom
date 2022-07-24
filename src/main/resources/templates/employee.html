@@ -26,8 +26,12 @@
         <tbody>
         <tr th:each="employee : ${employeeList}">
             <td th:text="${employee.getId()}"></td>
-            <td th:text="${employee.getRole()}"></td>
-
+            <td th:text="${employee.getFullName()}"></td>
+            <td>
+                <div th:each="workplace : ${employee.getWorkplaces()}">
+                    <div th:text="${workplace.getNameWorkplace()}"></div>
+                </div>
+            </td>
             <td><a th:href="@{/employee/{id}(id=${employee.getId()})}">Edit</a></td>
             <td>
                 <form th:action="@{/employee/{id}(id=${employee.getId()})}" method="post">

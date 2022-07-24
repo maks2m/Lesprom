@@ -133,3 +133,23 @@ values  (1, 1),
         (3, 1),
         (4, 1),
         (1, 2);
+
+insert into public.baguette (baguette_name)
+values  ('фигурный'),
+        ('прямой');
+
+insert into public.cutter (cutter_name)
+values  ('Пазовая фреза'),
+        ('Кромочная фреза');
+
+insert into public.workplace (name_workplace)
+values  ('раскрой'),
+        ('фрезеровка');
+
+insert into public.employee (full_name)
+values  ('Алексеев М.А.'),
+        ('Горчаков У.Ф.');
+
+insert into public.employee_workplace (id_workplace, id_employee)
+values  (1, 1),
+        (2, 2);
