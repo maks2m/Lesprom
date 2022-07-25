@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order edit</title>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/4.1.1/css/tabulator.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/4.1.1/js/tabulator.min.js"></script>
+
+    <script type="text/javascript" th:src="@{./../static/script/script.js}"></script>
+</head>
+<body>
+
+tableData(${{workplaces}});
+
+<table class="table">
+    <caption><h3>Order edit</h3></caption>
+    <tr>
+        <div th:insert="~{order :: order_thead_fragment}"></div>
+    </tr>
+
+    <form th:action="@{/order}" method="post">
+        <tr>
+
+            <input type="hidden" th:value="${(order.getId()!=0) ? order.getId() : ''}" name="id"/>
+            <th th:text="${(order.getId()!=0) ? order.getId() : ''}"></th>
+
+            <th><input type="text" th:value="${order.getNumberOrder()}" name="FullName" size=""/></th>
+            <!--
+                        <th>
+                            <select th:size="10" th:name="selectedWorkplaces" multiple>
+                                <option th:each="workplace : ${workplaces}"
+                                        th:text="${workplace.getNameWorkplace()}"
+                                        th:value="${workplace.getId()}"
+                                        th:selected="${selectedWorkplaces.contains(workplace)}">
+                                </option>
+                            </select>
+                        </th>
+            -->
+        </tr>
+        <tr>
+            <div id="example-table"></div>
+        </tr>
+        <tr>
+            <th><input type="submit" value="Save"/></th>
+            <th><input type="reset" value="Cancel"/></th>
+        </tr>
+    </form>
+
+</table>
+</body>
+</html>

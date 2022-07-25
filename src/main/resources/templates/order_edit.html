@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order edit</title>
+    <script>
+        function test(workplaces, selectedEmployees) {
+            for (let workplace in workplaces){
+
+            }
+            if (!selectedEmployees.empty()) {
+                for (let key in selectedEmployees.keys) {
+                    let tdElement = document.createElement('td');
+                    tdElement.className = "alert";
+                    tdElement.innerHTML =
+                        "                <table>\n" +
+                        "                    <tr>\n" +
+                        "                        <td th:text=\"${workplace.getNameWorkplace()}\">Title</td>\n" +
+                        "                    </tr>\n" +
+                        "                    <tr>\n" +
+                        "                        <td>\n" +
+                        "                            <select form=\"form_data\" th:size=\"10\" th:name=\"'selectedEmployeesToWorkplaceId' + ${workplace.getId()}\" multiple>\n" +
+                        "                                <option th:each=\"employee : ${workplace.getEmployees()}\"\n" +
+                        "                                        th:text=\"${employee.getFullName()}\"\n" +
+                        "                                        th:value=\"${employee.getId()}\"\n" +
+                        "                                        th:selected=\"${selectedEmployees.contains(employee)}\">\n" +
+                        "                                </option>\n" +
+                        "                            </select>\n" +
+                        "                        </td>\n" +
+                        "                    </tr>\n" +
+                        "                </table>";
+                    trInsertTag.append(divElement);
+                }
+            }
+
+        }
+    </script>
+</head>
+<body>
+<form id="form_data" th:action="@{/order}" method="post"></form>
+<h3>Order edit</h3>
+<table>
+    <caption><h4>General Info</h4></caption>
+    <tr>
+        <div th:insert="~{order :: order_thead_fragment}"></div>
+    </tr>
+    <tr>
+        <input form="form_data" type="hidden" th:value="${(order.getId()!=0) ? order.getId() : ''}" name="id"/>
+        <th th:text="${(order.getId()!=0) ? order.getId() : ''}"></th>
+        <th><input form="form_data" type="text" th:value="${order.getNumberOrder()}" name="FullName" size=""/></th>
+    </tr>
+</table>
+<hr>
+<table>
+    <caption><h4>Workplaces</h4></caption>
+    <tr id="trInsertTag">
+
+        <!--
+                <div th:each="workplace : ${workplaces}">
+                    <td>
+                        <table>
+                            <tr>
+                                <td th:text="${workplace.getNameWorkplace()}">Title</td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select form="form_data" th:size="10" th:name="'selectedEmployeesToWorkplaceId' + ${workplace.getId()}" multiple>
+                                        <option th:each="employee : ${workplace.getEmployees()}"
+                                                th:text="${employee.getFullName()}"
+                                                th:value="${employee.getId()}"
+                                                th:selected="${selectedEmployees.contains(employee)}">
+                                        </option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </div>
+        -->
+    </tr>
+</table>
+<hr>
+<table>
+    <tr>
+        <td><input form="form_data" type="submit" value="Save"/></td>
+        <td><input form="form_data" type="reset" value="Cancel"/></td>
+    </tr>
+</table>
+</body>
+</html>

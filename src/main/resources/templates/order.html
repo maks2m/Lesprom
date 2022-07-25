@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order</title>
+    <link rel="stylesheet" th:href="@{./../static/css/style.css}">
+</head>
+<body>
+
+<div th:insert="~{header :: header}"></div>
+
+<div th:fragment="order_fragment">
+    <a href="order/new">New order</a>
+    <h3>orders list</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <div th:fragment="order_thead_fragment">
+                <th>id</th>
+                <th>Number Order</th>
+            </div>
+            <div>
+                <th>Workplace</th>
+                <th colspan="2">Edit</th>
+            </div>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="order : ${orderList}">
+            <td th:text="${order.getId()}"></td>
+            <td th:text="${order.getNumberOrder()}"></td>
+            <td>
+                <div th:each="workplace : ${order.getWorkplaces()}">
+                    <div th:text="${workplace.getNameWorkplace()}"></div>
+                </div>
+            </td>
+            <td><a th:href="@{/order/{id}(id=${order.getId()})}">Edit</a></td>
+            <td>
+                <form th:action="@{/order/{id}(id=${order.getId()})}" method="post">
+                    <input type="submit" value="Del"/>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
