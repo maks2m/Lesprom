@@ -31,7 +31,7 @@ public class OrderService {
         return orderRepo.findById(id).orElseThrow(NotFoundException::new);
     }
 
-    public void save(Long id, Order item) {
+    public Order save(Long id, Order item) {
         Order itemFromDB;
         if (id == null) {
             itemFromDB = new Order();
@@ -39,11 +39,12 @@ public class OrderService {
             itemFromDB = getById(id);
         }
         BeanUtils.copyProperties(item, itemFromDB, "id");
-        orderRepo.save(itemFromDB);
+        return orderRepo.save(itemFromDB);
     }
 
     public void delete(Long id) {
         orderRepo.deleteById(id);
     }
+
 
 }

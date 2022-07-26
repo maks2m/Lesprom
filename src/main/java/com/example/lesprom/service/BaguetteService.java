@@ -31,7 +31,7 @@ public class BaguetteService {
         return baguetteRepo.findById(id).orElseThrow(NotFoundException::new);
     }
 
-    public void save(Long id, Baguette item) {
+    public Baguette save(Long id, Baguette item) {
         Baguette itemFromDB;
         if (id == null) {
             itemFromDB = new Baguette();
@@ -39,11 +39,12 @@ public class BaguetteService {
             itemFromDB = getById(id);
         }
         BeanUtils.copyProperties(item, itemFromDB, "id");
-        baguetteRepo.save(itemFromDB);
+        return baguetteRepo.save(itemFromDB);
     }
 
     public void delete(Long id) {
         baguetteRepo.deleteById(id);
     }
+
 
 }

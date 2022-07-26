@@ -1,9 +1,7 @@
 package com.example.lesprom.service;
 
-import com.example.lesprom.entity.Baguette;
 import com.example.lesprom.entity.Workplace;
 import com.example.lesprom.exception.NotFoundException;
-import com.example.lesprom.repo.BaguetteRepo;
 import com.example.lesprom.repo.WorkplaceRepo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +31,7 @@ public class WorkplaceService {
         return workplaceRepo.findById(id).orElseThrow(NotFoundException::new);
     }
 
-    public void save(Long id, Workplace item) {
+    public Workplace save(Long id, Workplace item) {
         Workplace itemFromDB;
         if (id == null) {
             itemFromDB = new Workplace();
@@ -41,7 +39,7 @@ public class WorkplaceService {
             itemFromDB = getById(id);
         }
         BeanUtils.copyProperties(item, itemFromDB, "id");
-        workplaceRepo.save(itemFromDB);
+        return workplaceRepo.save(itemFromDB);
     }
 
     public void delete(Long id) {

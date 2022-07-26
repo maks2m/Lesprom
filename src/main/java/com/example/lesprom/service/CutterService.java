@@ -31,7 +31,7 @@ public class CutterService {
         return cutterRepo.findById(id).orElseThrow(NotFoundException::new);
     }
 
-    public void save(Long id, Cutter item) {
+    public Cutter save(Long id, Cutter item) {
         Cutter itemFromDB;
         if (id == null) {
             itemFromDB = new Cutter();
@@ -39,7 +39,7 @@ public class CutterService {
             itemFromDB = getById(id);
         }
         BeanUtils.copyProperties(item, itemFromDB, "id");
-        cutterRepo.save(itemFromDB);
+        return cutterRepo.save(itemFromDB);
     }
 
     public void delete(Long id) {

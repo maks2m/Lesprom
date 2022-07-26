@@ -5,6 +5,7 @@ import com.example.lesprom.entity.User;
 import com.example.lesprom.exception.NotFoundException;
 import com.example.lesprom.repo.RoleRepo;
 import com.example.lesprom.repo.UserRepo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -47,6 +48,17 @@ public class UserService {
 
     public User findByUsername(String username) {
         return userRepo.findByUsername(username).orElseThrow(NotFoundException::new);
+    }
+
+    public User save(Long id, User item) {
+        User itemFromDB;
+        if (id == null) {
+            itemFromDB = new User();
+        } else {
+            itemFromDB = getById(id);
+        }
+        BeanUtils.copyProperties(item, itemFromDB, "id");
+        return userRepo.save(itemFromDB);
     }
 
     public boolean save(Long id, Map<String, String> mapModel, Model model) {

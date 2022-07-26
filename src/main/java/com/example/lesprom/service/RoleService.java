@@ -32,7 +32,7 @@ public class RoleService {
         return roleRepo.findById(id).orElseThrow(NotFoundException::new);
     }
 
-    public void save(Long id, Role item) {
+    public Role save(Long id, Role item) {
         Role itemFromDB;
         if (id == null) {
             itemFromDB = new Role();
@@ -40,10 +40,11 @@ public class RoleService {
             itemFromDB = getById(id);
         }
         BeanUtils.copyProperties(item, itemFromDB, "id");
-        roleRepo.save(itemFromDB);
+        return roleRepo.save(itemFromDB);
     }
 
     public void delete(Long id) {
         roleRepo.deleteById(id);
     }
+
 }

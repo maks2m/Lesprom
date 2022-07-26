@@ -31,7 +31,7 @@ public class EmployeeService {
         return employeeRepo.findById(id).orElseThrow(NotFoundException::new);
     }
 
-    public void save(Long id, Employee item) {
+    public Employee save(Long id, Employee item) {
         Employee itemFromDB;
         if (id == null) {
             itemFromDB = new Employee();
@@ -39,7 +39,7 @@ public class EmployeeService {
             itemFromDB = getById(id);
         }
         BeanUtils.copyProperties(item, itemFromDB, "id");
-        employeeRepo.save(itemFromDB);
+        return employeeRepo.save(itemFromDB);
     }
 
     public void delete(Long id) {
