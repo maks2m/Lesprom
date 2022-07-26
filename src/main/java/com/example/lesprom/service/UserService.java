@@ -87,7 +87,7 @@ public class UserService {
             }
         }
 
-        if (userRepo.findByUsername(mapModel.get("username")) != null) {
+        if (userRepo.findByUsername(mapModel.get("username")).isPresent()) {
             model.addAttribute("errorAddUser", "User exists!");
             model.addAttribute("user", itemFromDB);
             model.addAttribute("roleList", roleRepo.findAllByOrderById());
