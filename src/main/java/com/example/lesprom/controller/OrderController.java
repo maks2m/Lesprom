@@ -48,7 +48,7 @@ public class OrderController {
         model.addAttribute("workplaces", workplaceService.list());
         model.addAttribute("selectedWorkplaces", new ArrayList<Workplace>());
         model.addAttribute("employees", employeeService.list());
-        model.addAttribute("selectedEmployees", new HashMap<String, Set<Employee>>());
+        model.addAttribute("selectedEmployees", new ArrayList<Employee>());
         return "order_edit";
     }
 

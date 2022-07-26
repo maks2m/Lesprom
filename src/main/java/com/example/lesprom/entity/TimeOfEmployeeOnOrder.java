@@ -24,7 +24,7 @@ public class TimeOfEmployeeOnOrder {
     private LocalDateTime timeStartWork;
 
     @Column(name = "time_finish_work")
-    private Long timeFinishWork;
+    private LocalDateTime timeFinishWork;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_employee", foreignKey = @ForeignKey(name = "time_of_employee_on_order_employee_fk"))
