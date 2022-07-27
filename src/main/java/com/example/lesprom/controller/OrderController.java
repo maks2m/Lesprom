@@ -49,7 +49,7 @@ public class OrderController {
         model.addAttribute("selectedWorkplaces", new ArrayList<Workplace>());
         model.addAttribute("employees", employeeService.list());
         model.addAttribute("selectedEmployees", new ArrayList<Employee>());
-        return "order_edit";
+        return "order_edit_test";
     }
 
     @GetMapping("{id}")

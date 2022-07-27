@@ -1,50 +1,40 @@
-
-/*
-* https://webdevkin.ru/posts/frontend/tabulator
-* */
-
-
-$(document).ready(function () {
-
-});
-
-var table = new Tabulator('#example-table', {
-    data: tableData(),
-    layout: 'fitColumns',
-    columns: [
-        {title: 'Статья', field: 'nameWorkplace', width: 550},
-        {title: 'Количество голосов', field: 'countRates', align: 'left'},
-        {title: 'Средняя оценка', field: 'rating'}
-    ]
-});
-
-function tableData() {
-    return [
-        {
-            nameWorkplace: 'заготовительный',
-            employees: [
-                {
-                    id: '1',
-                    fullName: 'Иванов'
-                },
-                {
-                    id: '2',
-                    fullName: 'Петров'
-                }
-            ]
-        },
-        {
-            nameWorkplace: 'фрезерный',
-            employees: [
-                {
-                    id: '3',
-                    fullName: 'Сидоров'
-                },
-                {
-                    id: '4',
-                    fullName: 'Кокоберидзе'
-                }
-            ]
+const app = {
+    data() {
+        return {
+            users: '',
+            editUser: '',
+            roles: '',
         }
-    ];
+    },
+    mounted() {
+        axios
+            .get('http://localhost:8080/api/user')
+            .then(response => (this.users = response.data));
+        axios
+            .get('http://localhost:8080/api/role')
+            .then(response => (this.roles = response.data));
+    },
+    methods: {
+        save: function (user) {
+            console.log(user)
+        },
+        edit: function (user) {
+            this.editUser = user;
+        },
+        del: function (id, index) {
+/*
+            axios.delete(
+                'http://localhost:8080/api/user/' + id,
+                {headers: {
+                        Authorization: "Basic ZWxraW46ZWxraW4="
+                    },
+                    data:{
+                    }}
+            );
+*/
+            this.users.splice(index, 1);
+        }
+    }
 }
+
+Vue.createApp(app).mount('#app');

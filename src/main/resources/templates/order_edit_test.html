@@ -3,51 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <title>Order edit</title>
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/4.1.1/css/tabulator.min.css" rel="stylesheet">
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/4.1.1/js/tabulator.min.js"></script>
-
-    <script type="text/javascript" th:src="@{./../static/script/script.js}"></script>
+    <link rel="stylesheet" th:href="@{./../static/css/style.css}">
 </head>
 <body>
 
-tableData(${{workplaces}});
-
-<table class="table">
-    <caption><h3>Order edit</h3></caption>
-    <tr>
-        <div th:insert="~{order :: order_thead_fragment}"></div>
-    </tr>
-
-    <form th:action="@{/order}" method="post">
+<div id="app">
+    <a href="user/new">New user</a>
+    <h3>Users list</h3>
+    <table class="table">
+        <thead>
         <tr>
-
-            <input type="hidden" th:value="${(order.getId()!=0) ? order.getId() : ''}" name="id"/>
-            <th th:text="${(order.getId()!=0) ? order.getId() : ''}"></th>
-
-            <th><input type="text" th:value="${order.getNumberOrder()}" name="FullName" size=""/></th>
-            <!--
-                        <th>
-                            <select th:size="10" th:name="selectedWorkplaces" multiple>
-                                <option th:each="workplace : ${workplaces}"
-                                        th:text="${workplace.getNameWorkplace()}"
-                                        th:value="${workplace.getId()}"
-                                        th:selected="${selectedWorkplaces.contains(workplace)}">
-                                </option>
-                            </select>
-                        </th>
-            -->
+            <div>
+                <th>id</th>
+                <th>Username</th>
+                <th>Password</th>
+                <th>Role</th>
+                <th colspan="2">Edit</th>
+            </div>
         </tr>
-        <tr>
-            <div id="example-table"></div>
-        </tr>
-        <tr>
-            <th><input type="submit" value="Save"/></th>
-            <th><input type="reset" value="Cancel"/></th>
-        </tr>
-    </form>
+        </thead>
+        <tbody>
 
-</table>
+        <form @submit="save()">
+            <tr>
+                <input type="hidden" v-model="editUser.id" name="id"/>
+                <th v-text="(editUser.id != 0) ? editUser.id : ''"></th>
+                <th><input type="text" v-model="editUser.username"/></th>
+                <th><input type="password" v-model="editUser.password"/></th>
+                <th>
+                    <div v-for="role in roles">
+                        <label>
+                            <input type="checkbox" v-text="role.role"/>
+                        </label>
+                    </div>
+                </th>
+                <th><input type="submit" value="Save"/></th>
+                <th><input type="reset" value="Cancel"/></th>
+            </tr>
+        </form>
+
+        <tr v-for="(user, index) in users" v-if="users.length">
+            <td v-text="user.id"></td>
+            <td v-text="user.username"></td>
+            <td>********</td>
+            <td>
+                <div v-for="role in user.roles">
+                    <div v-text="role.role"></div>
+                </div>
+            </td>
+            <td><button @click="edit(user)">edit</button></td>
+            <td><button @click="del(user.id, index)">delete</button></td>
+        </tr>
+        <tr v-else>
+            <td>List is empty!</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/vue@next"></script>
+<script th:src="@{./../static/script/script.js}"></script>
 </body>
 </html>
