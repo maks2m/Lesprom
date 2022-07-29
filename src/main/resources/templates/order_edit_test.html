@@ -13,10 +13,10 @@
 <div th:insert="~{header :: header}"></div>
 
 <div id="app" class="container-fluid">
-    <a href="user/new">New user</a>
+    <a href="user/new" class="btn btn-primary">New user</a>
     <h3>Users list</h3>
-    <table class="table">
-        <thead>
+    <table class="table table-striped table-hover table-sm">
+        <thead class="table-info">
         <tr>
             <div>
                 <th>id</th>
@@ -42,8 +42,8 @@
                         </label>
                     </div>
                 </th>
-                <th><input type="submit" value="Save"/></th>
-                <th><input type="reset" value="Cancel"/></th>
+                <th><input class="btn btn-success" type="submit" value="Save"/></th>
+                <th><input class="btn btn-warning" type="reset" value="Cancel"/></th>
             </tr>
         </form>
 
@@ -56,8 +56,12 @@
                     <div v-text="role.role"></div>
                 </div>
             </td>
-            <td><button @click="edit(user)">edit</button></td>
-            <td><button @click="del(user.id, index)">delete</button></td>
+            <td>
+                <button class="btn btn-secondary" @click="edit(user)">edit</button>
+            </td>
+            <td>
+                <button class="btn btn-danger" @click="del(user.id, index)">delete</button>
+            </td>
         </tr>
         <tr v-else>
             <td>List is empty!</td>

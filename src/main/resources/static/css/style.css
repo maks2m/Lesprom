@@ -1,3 +1,4 @@
+/*
 .table {
     border: none;
     margin-bottom: 20px;
@@ -34,13 +35,13 @@
 }
 
 .table_index {
-    width: 100%; /* Ширина таблицы */
+    width: 100%; !* Ширина таблицы *!
 }
 .table_index tr td {
-    padding: 5px; /* Поля в ячейках */
-    vertical-align: top; /* Выравнивание по верхнему краю ячеек */
+    padding: 5px; !* Поля в ячейках *!
+    vertical-align: top; !* Выравнивание по верхнему краю ячеек *!
 }
 
 .table_header {
 
-}
+}*/
