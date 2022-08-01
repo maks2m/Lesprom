@@ -7,41 +7,46 @@
     <link rel="stylesheet" th:href="@{./../static/css/style.css}">
 </head>
 <body>
-
-<div th:insert="~{header :: header}"></div>
-
-<div th:fragment="employee_fragment">
-    <a href="employee/new">New employee</a>
-    <h3>Employees list</h3>
-    <table class="table">
-        <thead>
-        <tr>
-            <div th:fragment="employee_thead_fragment">
-                <th>id</th>
-                <th>Full name</th>
-                <th>Workplace</th>
-                <th colspan="2">Edit</th>
-            </div>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="employee : ${employeeList}">
-            <td th:text="${employee.getId()}"></td>
-            <td th:text="${employee.getFullName()}"></td>
-            <td>
-                <div th:each="workplace : ${employee.getWorkplaces()}">
-                    <div th:text="${workplace.getNameWorkplace()}"></div>
-                </div>
-            </td>
-            <td><a th:href="@{/employee/{id}(id=${employee.getId()})}">Edit</a></td>
-            <td>
-                <form th:action="@{/employee/{id}(id=${employee.getId()})}" method="post">
-                    <input type="submit" value="Del"/>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+<div class="container-fluid">
+    <header>
+        <div th:insert="~{header :: header}"></div>
+    </header>
+    <main style="padding-top: 70px">
+        <div th:fragment="employee_fragment">
+            <a href="employee/new">New employee</a>
+            <h3>Employees list</h3>
+            <table class="table">
+                <thead>
+                <tr>
+                    <div th:fragment="employee_thead_fragment">
+                        <th>id</th>
+                        <th>Full name</th>
+                        <th>Workplace</th>
+                        <th colspan="2">Edit</th>
+                    </div>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="employee : ${employeeList}">
+                    <td th:text="${employee.getId()}"></td>
+                    <td th:text="${employee.getFullName()}"></td>
+                    <td>
+                        <div th:each="workplace : ${employee.getWorkplaces()}">
+                            <div th:text="${workplace.getNameWorkplace()}"></div>
+                        </div>
+                    </td>
+                    <td><a th:href="@{/employee/{id}(id=${employee.getId()})}">Edit</a></td>
+                    <td>
+                        <form th:action="@{/employee/{id}(id=${employee.getId()})}" method="post">
+                            <input type="submit" value="Del"/>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+    <footer></footer>
 </div>
 <script th:src="@{./../static/script/bootstrap.bundle.min.js}"></script>
 </body>

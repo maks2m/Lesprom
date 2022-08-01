@@ -7,43 +7,50 @@
     <link rel="stylesheet" th:href="@{./../static/css/style.css}">
 </head>
 <body>
+<div class="container-fluid">
+    <header>
+        <div th:insert="~{header :: header}"></div>
+    </header>
 
-<div th:insert="~{header :: header}"></div>
+    <main style="padding-top: 70px">
+        <div th:fragment="order_fragment">
+            <a href="order/new">New order</a>
+            <h3>orders list</h3>
+            <table class="table">
+                <thead>
+                <tr>
+                    <div th:fragment="order_thead_fragment">
+                        <th>id</th>
+                        <th>Number Order</th>
+                    </div>
+                    <div>
+                        <th>Workplace</th>
+                        <th colspan="2">Edit</th>
+                    </div>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="order : ${orderList}">
+                    <td th:text="${order.getId()}"></td>
+                    <td th:text="${order.getNumberOrder()}"></td>
+                    <td>
+                        <div th:each="workplace : ${order.getWorkplaces()}">
+                            <div th:text="${workplace.getNameWorkplace()}"></div>
+                        </div>
+                    </td>
+                    <td><a th:href="@{/order/{id}(id=${order.getId()})}">Edit</a></td>
+                    <td>
+                        <form th:action="@{/order/{id}(id=${order.getId()})}" method="post">
+                            <input type="submit" value="Del"/>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
 
-<div th:fragment="order_fragment">
-    <a href="order/new">New order</a>
-    <h3>orders list</h3>
-    <table class="table">
-        <thead>
-        <tr>
-            <div th:fragment="order_thead_fragment">
-                <th>id</th>
-                <th>Number Order</th>
-            </div>
-            <div>
-                <th>Workplace</th>
-                <th colspan="2">Edit</th>
-            </div>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="order : ${orderList}">
-            <td th:text="${order.getId()}"></td>
-            <td th:text="${order.getNumberOrder()}"></td>
-            <td>
-                <div th:each="workplace : ${order.getWorkplaces()}">
-                    <div th:text="${workplace.getNameWorkplace()}"></div>
-                </div>
-            </td>
-            <td><a th:href="@{/order/{id}(id=${order.getId()})}">Edit</a></td>
-            <td>
-                <form th:action="@{/order/{id}(id=${order.getId()})}" method="post">
-                    <input type="submit" value="Del"/>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <footer></footer>
 </div>
 <script th:src="@{./../static/script/bootstrap.bundle.min.js}"></script>
 </body>

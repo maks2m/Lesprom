@@ -1,9 +1,9 @@
 const app = {
     data() {
         return {
-            users: '',
+            users: [],
             editUser: '',
-            roles: '',
+            roles: [],
         }
     },
     mounted() {
