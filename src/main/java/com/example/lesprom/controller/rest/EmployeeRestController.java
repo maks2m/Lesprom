@@ -38,7 +38,9 @@ public class EmployeeRestController {
 
     @PutMapping("{id}")
     public EmployeeDto update(@PathVariable Long id, @RequestBody EmployeeDto modelDto) {
+        System.out.println("modelDto " + modelDto.getFullName());
         Employee model = EmployeeMapper.INSTANCE.mapSingle(modelDto);
+        System.out.println("model " + model.getFullName());
         return EmployeeMapper.INSTANCE.mapSingle(employeeService.save(id, model));
     }
 

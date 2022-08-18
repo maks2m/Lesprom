@@ -38,7 +38,10 @@ public class EmployeeService {
         } else {
             itemFromDB = getById(id);
         }
+        System.out.println("itemFromDB " + itemFromDB.getFullName());
+        System.out.println("item " + item.getFullName());
         BeanUtils.copyProperties(item, itemFromDB, "id");
+        System.out.println("itemFromDB after copyProperties " + itemFromDB.getFullName());
         return employeeRepo.save(itemFromDB);
     }
 
