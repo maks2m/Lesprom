@@ -2,6 +2,7 @@ package com.example.lesprom.controller.rest;
 
 import com.example.lesprom.config.security.JwtTokenProvider;
 import com.example.lesprom.dto.AuthenticationRequestDTO;
+import com.example.lesprom.entity.Role;
 import com.example.lesprom.entity.User;
 import com.example.lesprom.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -39,10 +41,11 @@ public class AuthenticationRestController {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
             User user = userService.findByUsername(request.getUsername());
-            String token = jwtTokenProvider.createToken(request.getUsername(), user.getRoles().toString());
+            String token = jwtTokenProvider.createToken(request.getUsername(), user.getRoles().stream().map(Role::getRole).collect(Collectors.toList()).toString());
             Map<Object, Object> response = new HashMap<>();
             response.put("username", request.getUsername());
             response.put("token", token);
+            response.put("roles", user.getRoles().stream().map(Role::getRole).collect(Collectors.toList()));
             return ResponseEntity.ok(response);
         } catch (AuthenticationException e) {
             return new ResponseEntity<>("Invalid email/password combination", HttpStatus.FORBIDDEN);
