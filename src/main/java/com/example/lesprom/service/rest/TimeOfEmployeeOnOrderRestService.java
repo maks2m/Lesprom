@@ -2,6 +2,8 @@ package com.example.lesprom.service.rest;
 
 import com.example.lesprom.entity.TimeOfEmployeeOnOrder;
 import com.example.lesprom.exception.NotFoundException;
+import com.example.lesprom.repo.EmployeeRepo;
+import com.example.lesprom.repo.OrderRepo;
 import com.example.lesprom.repo.TimeOfEmployeeOnOrderRepo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -11,8 +13,13 @@ import java.util.List;
 @Service
 public class TimeOfEmployeeOnOrderRestService extends AbstractRestService<TimeOfEmployeeOnOrder, TimeOfEmployeeOnOrderRepo> {
 
-    public TimeOfEmployeeOnOrderRestService(TimeOfEmployeeOnOrderRepo repository) {
+    private final EmployeeRepo employeeRepo;
+    private final OrderRepo orderRepo;
+
+    public TimeOfEmployeeOnOrderRestService(TimeOfEmployeeOnOrderRepo repository, EmployeeRepo employeeRepo, OrderRepo orderRepo) {
         super(repository);
+        this.employeeRepo = employeeRepo;
+        this.orderRepo = orderRepo;
     }
 
     @Override
@@ -28,12 +35,14 @@ public class TimeOfEmployeeOnOrderRestService extends AbstractRestService<TimeOf
     @Override
     public TimeOfEmployeeOnOrder create(TimeOfEmployeeOnOrder item) {
         item.setId(null);
+        setChildren(item);
         return repository.save(item);
     }
 
     @Override
     public TimeOfEmployeeOnOrder update(Long id, TimeOfEmployeeOnOrder item) {
         TimeOfEmployeeOnOrder itemFromDB = repository.findById(id).orElseThrow(NotFoundException::new);
+        setChildren(item);
         BeanUtils.copyProperties(item, itemFromDB, "id");
         return repository.save(itemFromDB);
     }
@@ -42,4 +51,14 @@ public class TimeOfEmployeeOnOrderRestService extends AbstractRestService<TimeOf
     public void delete(Long id) {
         repository.deleteById(id);
     }
+
+    /**
+     * функция поиска в БД и восстановления дочерних сущностей в родительской по ID
+     * @param item - сущность, требующая восстановления дочерних сущностей
+     */
+    private void setChildren(TimeOfEmployeeOnOrder item) {
+        item.setEmployee(employeeRepo.findById(item.getEmployee().getId()).orElseThrow(NotFoundException::new));
+        item.setOrder(orderRepo.findById(item.getOrder().getId()).orElseThrow(NotFoundException::new));
+    }
+
 }

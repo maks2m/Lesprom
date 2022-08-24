@@ -3,6 +3,7 @@ package com.example.lesprom.service.rest;
 import com.example.lesprom.entity.Role;
 import com.example.lesprom.entity.User;
 import com.example.lesprom.exception.NotFoundException;
+import com.example.lesprom.exception.NotUniqueUsernameException;
 import com.example.lesprom.repo.RoleRepo;
 import com.example.lesprom.repo.UserRepo;
 import org.springframework.beans.BeanUtils;
@@ -38,8 +39,7 @@ public class UserRestService extends AbstractRestService<User, UserRepo> {
 
     @Override
     public User create(User item) {
-        //добавить проверку на наличие такого имени пользователя в БД
-        if (repository.findByUsername(item.getUsername()).orElse(null) == null) new Exception();
+        checkUniqueUsername(item);
         item.setId(null);
         setChildren(item);
         return super.repository.save(item);
@@ -47,8 +47,7 @@ public class UserRestService extends AbstractRestService<User, UserRepo> {
 
     @Override
     public User update(Long id, User item) {
-        //добавить проверку на наличие такого имени пользователя в БД
-
+        checkUniqueUsername(item);
         User itemFromDB = repository.findById(id).orElseThrow(NotFoundException::new);
         setChildren(item);
         BeanUtils.copyProperties(item, itemFromDB, "id");
@@ -68,8 +67,13 @@ public class UserRestService extends AbstractRestService<User, UserRepo> {
         item.setRoles(new HashSet<>(roleRepo.findAllById(item.getRoles().stream().map(Role::getId).collect(Collectors.toSet()))));
     }
 
-    private void checkUniqueUsername() {
-
+    /**
+     * функция проверки уникальности username в БД
+     * @param item - сущность, требующая проверки уникальности username в БД
+     * exception - отправляет статус HttpStatus.CONFLICT
+     */
+    private void checkUniqueUsername(User item) {
+        if (repository.findByUsername(item.getUsername()).orElse(null) != null) throw new NotUniqueUsernameException();
     }
 
 }

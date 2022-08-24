@@ -147,6 +147,9 @@ create table workplace
     primary key (id)
 );
 
+alter table usr
+    add constraint UK_usr_username unique (username);
+
 alter table if exists employee_workplace
     add constraint buffer_employee_fk foreign key (id_employee) references employee;
 alter table if exists employee_workplace
@@ -248,14 +251,16 @@ values (1, 1),
        (7, 13),
        (7, 14);
 
-insert into public.order_on_create (number_order, number_order_other, start_date, finish_date, duty, color, wood_mass, wood_veneer, radius, glass, binding, notes)
+insert into public.order_on_create (number_order, number_order_other, start_date, finish_date, duty, color, wood_mass,
+                                    wood_veneer, radius, glass, binding, notes)
 values ('1111a', '11sdfgs', '2022-01-05', '2022-02-05', '5000', 'синий', 5.58, 1.68, 3, 'стекло заказчика', 'нет',
         'детская кроватка двухярусная из мареного дуба с золотыми вставками'),
        ('2222b', '22sdfgs', '2022-01-01', '2022-02-02', '15000', 'серый', 9.58, 8.68, 5, 'стекло заказчика', 'нет',
         'шкаф'),
        ('3333c', '33sdfgs', '2022-03-15', '2022-05-21', '5482', 'голубой', 5.58, 2.68, 4, 'стекло зеленое', 'да',
         'кровать'),
-       ('4444d', '44sdfgs', '2022-06-08', '2022-07-28', '8659878', 'серкоричневыйый', 1.58, 0.68, 9, 'нужно стекло', 'да',
+       ('4444d', '44sdfgs', '2022-06-08', '2022-07-28', '8659878', 'серкоричневыйый', 1.58, 0.68, 9, 'нужно стекло',
+        'да',
         'диван'),
        ('5555e', '55sdfgs', '2022-04-19', '2022-05-02', '50', 'черный', 0.58, 1.68, 1, 'стекло заказчика', 'нет',
         'заказчик козел');
