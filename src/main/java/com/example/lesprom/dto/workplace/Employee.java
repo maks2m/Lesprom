@@ -1,9 +1,9 @@
-package com.example.lesprom.dto;
+package com.example.lesprom.dto.workplace;
 
 import lombok.Data;
 
 @Data
-public class EmployeeDto {
+public class Employee {
     private Long id;
     private String fullName;
 }

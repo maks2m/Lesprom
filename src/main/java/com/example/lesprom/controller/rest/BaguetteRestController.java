@@ -1,9 +1,8 @@
 package com.example.lesprom.controller.rest;
 
-import com.example.lesprom.dto.BaguetteDto;
-import com.example.lesprom.entity.Baguette;
+import com.example.lesprom.dto.baguette.Baguette;
 import com.example.lesprom.mapper.BaguetteMapper;
-import com.example.lesprom.service.BaguetteService;
+import com.example.lesprom.service.rest.BaguetteRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,38 +12,38 @@ import java.util.List;
 @RequestMapping("/api/baguette")
 public class BaguetteRestController {
 
-    private final BaguetteService baguetteService;
+    private final BaguetteRestService service;
 
     @Autowired
-    public BaguetteRestController(BaguetteService baguetteService) {
-        this.baguetteService = baguetteService;
+    public BaguetteRestController(BaguetteRestService service) {
+        this.service = service;
     }
 
     @GetMapping
-    public List<BaguetteDto> list() {
-        return BaguetteMapper.INSTANCE.mapList(baguetteService.list());
+    public List<Baguette> list() {
+        return BaguetteMapper.INSTANCE.mapList(service.list());
     }
 
     @GetMapping("{id}")
-    public BaguetteDto getOne(@PathVariable Long id) {
-        return BaguetteMapper.INSTANCE.mapSingle(baguetteService.getById(id));
+    public Baguette getOne(@PathVariable Long id) {
+        return BaguetteMapper.INSTANCE.mapSingle(service.getById(id));
     }
 
     @PostMapping
-    public BaguetteDto create(@RequestBody BaguetteDto modelDto) {
-        Baguette model = BaguetteMapper.INSTANCE.mapSingle(modelDto);
-        return BaguetteMapper.INSTANCE.mapSingle(baguetteService.save(null ,model));
+    public Baguette create(@RequestBody Baguette modelDto) {
+        com.example.lesprom.entity.Baguette model = BaguetteMapper.INSTANCE.mapSingle(modelDto);
+        return BaguetteMapper.INSTANCE.mapSingle(service.create(model));
     }
 
     @PutMapping("{id}")
-    public BaguetteDto update(@PathVariable Long id, @RequestBody BaguetteDto modelDto) {
-        Baguette model = BaguetteMapper.INSTANCE.mapSingle(modelDto);
-        return BaguetteMapper.INSTANCE.mapSingle(baguetteService.save(id, model));
+    public Baguette update(@PathVariable Long id, @RequestBody Baguette modelDto) {
+        com.example.lesprom.entity.Baguette model = BaguetteMapper.INSTANCE.mapSingle(modelDto);
+        return BaguetteMapper.INSTANCE.mapSingle(service.update(id, model));
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable Long id) {
-        baguetteService.delete(id);
+        service.delete(id);
     }
 
 }

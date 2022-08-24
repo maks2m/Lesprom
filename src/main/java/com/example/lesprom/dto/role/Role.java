@@ -1,9 +1,9 @@
-package com.example.lesprom.dto;
+package com.example.lesprom.dto.role;
 
 import lombok.Data;
 
 @Data
-public class RoleDto {
+public class Role {
     private Long id;
     private String role;
 }

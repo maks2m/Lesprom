@@ -1,9 +1,8 @@
 package com.example.lesprom.controller.rest;
 
-import com.example.lesprom.dto.WorkplaceDto;
-import com.example.lesprom.entity.Workplace;
+import com.example.lesprom.dto.workplace.Workplace;
 import com.example.lesprom.mapper.WorkplaceMapper;
-import com.example.lesprom.service.WorkplaceService;
+import com.example.lesprom.service.rest.WorkplaceRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,38 +12,38 @@ import java.util.List;
 @RequestMapping("/api/workplace")
 public class WorkplaceRestController {
 
-    private final WorkplaceService workplaceService;
+    private final WorkplaceRestService service;
 
     @Autowired
-    public WorkplaceRestController(WorkplaceService workplaceService) {
-        this.workplaceService = workplaceService;
+    public WorkplaceRestController(WorkplaceRestService service) {
+        this.service = service;
     }
 
     @GetMapping
-    public List<WorkplaceDto> list() {
-        return WorkplaceMapper.INSTANCE.mapList(workplaceService.list());
+    public List<Workplace> list() {
+        return WorkplaceMapper.INSTANCE.mapList(service.list());
     }
 
     @GetMapping("{id}")
-    public WorkplaceDto getOne(@PathVariable Long id) {
-        return WorkplaceMapper.INSTANCE.mapSingle(workplaceService.getById(id));
+    public Workplace getOne(@PathVariable Long id) {
+        return WorkplaceMapper.INSTANCE.mapSingle(service.getById(id));
     }
 
     @PostMapping
-    public WorkplaceDto create(@RequestBody WorkplaceDto modelDto) {
-        Workplace model = WorkplaceMapper.INSTANCE.mapSingle(modelDto);
-        return WorkplaceMapper.INSTANCE.mapSingle(workplaceService.save(null ,model));
+    public Workplace create(@RequestBody Workplace modelDto) {
+        com.example.lesprom.entity.Workplace model = WorkplaceMapper.INSTANCE.mapSingle(modelDto);
+        return WorkplaceMapper.INSTANCE.mapSingle(service.create(model));
     }
 
     @PutMapping("{id}")
-    public WorkplaceDto update(@PathVariable Long id, @RequestBody WorkplaceDto modelDto) {
-        Workplace model = WorkplaceMapper.INSTANCE.mapSingle(modelDto);
-        return WorkplaceMapper.INSTANCE.mapSingle(workplaceService.save(id, model));
+    public Workplace update(@PathVariable Long id, @RequestBody Workplace modelDto) {
+        com.example.lesprom.entity.Workplace model = WorkplaceMapper.INSTANCE.mapSingle(modelDto);
+        return WorkplaceMapper.INSTANCE.mapSingle(service.update(id, model));
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable Long id) {
-        workplaceService.delete(id);
+        service.delete(id);
     }
 
 

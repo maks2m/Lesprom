@@ -1,7 +1,6 @@
 package com.example.lesprom.mapper;
 
-import com.example.lesprom.dto.RoleDto;
-import com.example.lesprom.entity.Role;
+import com.example.lesprom.dto.role.Role;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -13,13 +12,13 @@ public interface RoleMapper {
 
     RoleMapper INSTANCE = Mappers.getMapper( RoleMapper.class );
 
-    RoleDto mapSingle(Role item);
+    Role mapSingle(com.example.lesprom.entity.Role item);
     @InheritInverseConfiguration
-    Role mapSingle(RoleDto dto);
+    com.example.lesprom.entity.Role mapSingle(Role dto);
 
-    List<RoleDto> mapList(List<Role> itemList);
+    List<Role> mapList(List<com.example.lesprom.entity.Role> itemList);
     @InheritInverseConfiguration
-    List<Role> mapListInvert(List<RoleDto> dtoList);
+    List<com.example.lesprom.entity.Role> mapListInvert(List<Role> dtoList);
 
 
 }

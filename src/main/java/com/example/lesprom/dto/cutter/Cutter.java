@@ -1,9 +1,9 @@
-package com.example.lesprom.dto;
+package com.example.lesprom.dto.cutter;
 
 import lombok.Data;
 
 @Data
-public class CutterDto {
+public class Cutter {
     private Long id;
     private String cutterName;
 }

@@ -1,7 +1,6 @@
 package com.example.lesprom.mapper;
 
-import com.example.lesprom.dto.WorkplaceDto;
-import com.example.lesprom.entity.Workplace;
+import com.example.lesprom.dto.workplace.Workplace;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -13,13 +12,13 @@ public interface WorkplaceMapper {
 
     WorkplaceMapper INSTANCE = Mappers.getMapper( WorkplaceMapper.class );
 
-    WorkplaceDto mapSingle(Workplace item);
+    Workplace mapSingle(com.example.lesprom.entity.Workplace item);
     @InheritInverseConfiguration
-    Workplace mapSingle(WorkplaceDto dto);
+    com.example.lesprom.entity.Workplace mapSingle(Workplace dto);
 
-    List<WorkplaceDto> mapList(List<Workplace> itemList);
+    List<Workplace> mapList(List<com.example.lesprom.entity.Workplace> itemList);
     @InheritInverseConfiguration
-    List<Workplace> mapListInvert(List<WorkplaceDto> dtoList);
+    List<com.example.lesprom.entity.Workplace> mapListInvert(List<Workplace> dtoList);
 
 
 }

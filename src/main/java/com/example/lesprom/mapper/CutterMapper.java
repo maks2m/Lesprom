@@ -1,7 +1,6 @@
 package com.example.lesprom.mapper;
 
-import com.example.lesprom.dto.CutterDto;
-import com.example.lesprom.entity.Cutter;
+import com.example.lesprom.dto.cutter.Cutter;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -13,13 +12,13 @@ public interface CutterMapper {
 
     CutterMapper INSTANCE = Mappers.getMapper( CutterMapper.class );
 
-    CutterDto mapSingle(Cutter item);
+    Cutter mapSingle(com.example.lesprom.entity.Cutter item);
     @InheritInverseConfiguration
-    Cutter mapSingle(CutterDto dto);
+    com.example.lesprom.entity.Cutter mapSingle(Cutter dto);
 
-    List<CutterDto> mapList(List<Cutter> itemList);
+    List<Cutter> mapList(List<com.example.lesprom.entity.Cutter> itemList);
     @InheritInverseConfiguration
-    List<Cutter> mapListInvert(List<CutterDto> dtoList);
+    List<com.example.lesprom.entity.Cutter> mapListInvert(List<Cutter> dtoList);
 
 
 }

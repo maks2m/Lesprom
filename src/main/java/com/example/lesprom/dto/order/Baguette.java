@@ -1,9 +1,9 @@
-package com.example.lesprom.dto;
+package com.example.lesprom.dto.order;
 
 import lombok.Data;
 
 @Data
-public class BaguetteDto {
+public class Baguette {
     private Long id;
     private String baguetteName;
 }

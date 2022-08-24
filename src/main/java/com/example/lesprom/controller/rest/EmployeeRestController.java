@@ -1,9 +1,8 @@
 package com.example.lesprom.controller.rest;
 
-import com.example.lesprom.dto.EmployeeDto;
-import com.example.lesprom.entity.Employee;
+import com.example.lesprom.dto.employee.Employee;
 import com.example.lesprom.mapper.EmployeeMapper;
-import com.example.lesprom.service.EmployeeService;
+import com.example.lesprom.service.rest.EmployeeRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,40 +12,38 @@ import java.util.List;
 @RequestMapping("/api/employee")
 public class EmployeeRestController {
 
-    private final EmployeeService employeeService;
+    private final EmployeeRestService service;
 
     @Autowired
-    public EmployeeRestController(EmployeeService employeeService) {
-        this.employeeService = employeeService;
+    public EmployeeRestController(EmployeeRestService service) {
+        this.service = service;
     }
 
     @GetMapping
-    public List<EmployeeDto> list() {
-        return EmployeeMapper.INSTANCE.mapList(employeeService.list());
+    public List<Employee> list() {
+        return EmployeeMapper.INSTANCE.mapList(service.list());
     }
 
     @GetMapping("{id}")
-    public EmployeeDto getOne(@PathVariable Long id) {
-        return EmployeeMapper.INSTANCE.mapSingle(employeeService.getById(id));
+    public Employee getOne(@PathVariable Long id) {
+        return EmployeeMapper.INSTANCE.mapSingle(service.getById(id));
     }
 
     @PostMapping
-    public EmployeeDto create(@RequestBody EmployeeDto modelDto) {
-        Employee model = EmployeeMapper.INSTANCE.mapSingle(modelDto);
-        return EmployeeMapper.INSTANCE.mapSingle(employeeService.save(null ,model));
+    public Employee create(@RequestBody Employee modelDto) {
+        com.example.lesprom.entity.Employee model = EmployeeMapper.INSTANCE.mapSingle(modelDto);
+        return EmployeeMapper.INSTANCE.mapSingle(service.create(model));
     }
 
     @PutMapping("{id}")
-    public EmployeeDto update(@PathVariable Long id, @RequestBody EmployeeDto modelDto) {
-        System.out.println("modelDto " + modelDto.getFullName());
-        Employee model = EmployeeMapper.INSTANCE.mapSingle(modelDto);
-        System.out.println("model " + model.getFullName());
-        return EmployeeMapper.INSTANCE.mapSingle(employeeService.save(id, model));
+    public Employee update(@PathVariable Long id, @RequestBody Employee modelDto) {
+        com.example.lesprom.entity.Employee model = EmployeeMapper.INSTANCE.mapSingle(modelDto);
+        return EmployeeMapper.INSTANCE.mapSingle(service.update(id, model));
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable Long id) {
-        employeeService.delete(id);
+        service.delete(id);
     }
 
 }

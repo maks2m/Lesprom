@@ -1,9 +1,8 @@
 package com.example.lesprom.controller.rest;
 
-import com.example.lesprom.dto.RoleDto;
-import com.example.lesprom.entity.Role;
+import com.example.lesprom.dto.role.Role;
 import com.example.lesprom.mapper.RoleMapper;
-import com.example.lesprom.service.RoleService;
+import com.example.lesprom.service.rest.RoleRestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,38 +12,38 @@ import java.util.List;
 @RequestMapping("/api/role")
 public class RoleRestController {
 
-    private final RoleService roleService;
+    private final RoleRestService service;
 
     @Autowired
-    public RoleRestController(RoleService roleService) {
-        this.roleService = roleService;
+    public RoleRestController(RoleRestService service) {
+        this.service = service;
     }
 
     @GetMapping
-    public List<RoleDto> list() {
-        return RoleMapper.INSTANCE.mapList(roleService.list());
+    public List<Role> list() {
+        return RoleMapper.INSTANCE.mapList(service.list());
     }
 
     @GetMapping("{id}")
-    public RoleDto getOne(@PathVariable Long id) {
-        return RoleMapper.INSTANCE.mapSingle(roleService.getById(id));
+    public Role getOne(@PathVariable Long id) {
+        return RoleMapper.INSTANCE.mapSingle(service.getById(id));
     }
 
     @PostMapping
-    public RoleDto create(@RequestBody RoleDto modelDto) {
-        Role model = RoleMapper.INSTANCE.mapSingle(modelDto);
-        return RoleMapper.INSTANCE.mapSingle(roleService.save(null ,model));
+    public Role create(@RequestBody Role modelDto) {
+        com.example.lesprom.entity.Role model = RoleMapper.INSTANCE.mapSingle(modelDto);
+        return RoleMapper.INSTANCE.mapSingle(service.create(model));
     }
 
     @PutMapping("{id}")
-    public RoleDto update(@PathVariable Long id, @RequestBody RoleDto modelDto) {
-        Role model = RoleMapper.INSTANCE.mapSingle(modelDto);
-        return RoleMapper.INSTANCE.mapSingle(roleService.save(id, model));
+    public Role update(@PathVariable Long id, @RequestBody Role modelDto) {
+        com.example.lesprom.entity.Role model = RoleMapper.INSTANCE.mapSingle(modelDto);
+        return RoleMapper.INSTANCE.mapSingle(service.update(id, model));
     }
 
     @DeleteMapping("{id}")
     public void delete(@PathVariable Long id) {
-        roleService.delete(id);
+        service.delete(id);
     }
 
 }

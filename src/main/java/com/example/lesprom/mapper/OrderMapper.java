@@ -1,7 +1,6 @@
 package com.example.lesprom.mapper;
 
-import com.example.lesprom.dto.OrderDto;
-import com.example.lesprom.entity.Order;
+import com.example.lesprom.dto.order.Order;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -13,13 +12,13 @@ public interface OrderMapper {
 
     OrderMapper INSTANCE = Mappers.getMapper( OrderMapper.class );
 
-    OrderDto mapSingle(Order item);
+    Order mapSingle(com.example.lesprom.entity.Order item);
     @InheritInverseConfiguration
-    Order mapSingle(OrderDto dto);
+    com.example.lesprom.entity.Order mapSingle(Order dto);
 
-    List<OrderDto> mapList(List<Order> itemList);
+    List<Order> mapList(List<com.example.lesprom.entity.Order> itemList);
     @InheritInverseConfiguration
-    List<Order> mapListInvert(List<OrderDto> dtoList);
+    List<com.example.lesprom.entity.Order> mapListInvert(List<Order> dtoList);
 
 
 }

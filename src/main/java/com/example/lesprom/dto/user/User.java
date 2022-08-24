@@ -1,4 +1,4 @@
-package com.example.lesprom.dto;
+package com.example.lesprom.dto.user;
 
 import lombok.Data;
 
@@ -6,9 +6,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-public class UserDto {
+public class User {
     private Long id;
     private String username;
     private String password;
-    private Set<RoleDto> roles = new HashSet<>();;
+    private Set<Role> roles = new HashSet<>();
 }

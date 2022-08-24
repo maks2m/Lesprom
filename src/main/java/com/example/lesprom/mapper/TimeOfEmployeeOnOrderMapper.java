@@ -1,7 +1,6 @@
 package com.example.lesprom.mapper;
 
-import com.example.lesprom.dto.TimeOfEmployeeOnOrderDto;
-import com.example.lesprom.entity.TimeOfEmployeeOnOrder;
+import com.example.lesprom.dto.timeofemployeeonorder.TimeOfEmployeeOnOrder;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -13,13 +12,13 @@ public interface TimeOfEmployeeOnOrderMapper {
 
     TimeOfEmployeeOnOrderMapper INSTANCE = Mappers.getMapper( TimeOfEmployeeOnOrderMapper.class );
 
-    TimeOfEmployeeOnOrderDto mapSingle(TimeOfEmployeeOnOrder item);
+    TimeOfEmployeeOnOrder mapSingle(com.example.lesprom.entity.TimeOfEmployeeOnOrder item);
     @InheritInverseConfiguration
-    TimeOfEmployeeOnOrder mapSingle(TimeOfEmployeeOnOrderDto dto);
+    com.example.lesprom.entity.TimeOfEmployeeOnOrder mapSingle(TimeOfEmployeeOnOrder dto);
 
-    List<TimeOfEmployeeOnOrderDto> mapList(List<TimeOfEmployeeOnOrder> itemList);
+    List<TimeOfEmployeeOnOrder> mapList(List<com.example.lesprom.entity.TimeOfEmployeeOnOrder> itemList);
     @InheritInverseConfiguration
-    List<TimeOfEmployeeOnOrder> mapListInvert(List<TimeOfEmployeeOnOrderDto> dtoList);
+    List<com.example.lesprom.entity.TimeOfEmployeeOnOrder> mapListInvert(List<TimeOfEmployeeOnOrder> dtoList);
 
 
 }
