@@ -4,7 +4,7 @@ import com.example.lesprom.config.security.JwtTokenProvider;
 import com.example.lesprom.dto.authentication.AuthenticationRequest;
 import com.example.lesprom.entity.Role;
 import com.example.lesprom.entity.User;
-import com.example.lesprom.service.rest.UserRestService;
+import com.example.lesprom.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,10 +27,10 @@ import java.util.stream.Collectors;
 public class AuthenticationRestController {
 
     private final AuthenticationManager authenticationManager;
-    private final UserRestService userService;
+    private final UserService userService;
     private final JwtTokenProvider jwtTokenProvider;
 
-    public AuthenticationRestController(AuthenticationManager authenticationManager, UserRestService userService, JwtTokenProvider jwtTokenProvider) {
+    public AuthenticationRestController(AuthenticationManager authenticationManager, UserService userService, JwtTokenProvider jwtTokenProvider) {
         this.authenticationManager = authenticationManager;
         this.userService = userService;
         this.jwtTokenProvider = jwtTokenProvider;
@@ -39,6 +39,7 @@ public class AuthenticationRestController {
     @PostMapping("/login")
     public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest request) {
         try {
+
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
             User user = userService.findByUsername(request.getUsername());
             String token = jwtTokenProvider.createToken(request.getUsername(), user.getRoles().stream().map(Role::getRole).collect(Collectors.toList()).toString());

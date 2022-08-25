@@ -1,39 +1,40 @@
-package com.example.lesprom.service.rest;
+package com.example.lesprom.service.rest.impl;
 
-import com.example.lesprom.entity.Cutter;
+import com.example.lesprom.entity.Workplace;
 import com.example.lesprom.exception.NotFoundException;
-import com.example.lesprom.repo.CutterRepo;
+import com.example.lesprom.repo.WorkplaceRepo;
+import com.example.lesprom.service.rest.AbstractRestService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CutterRestService extends AbstractRestService<Cutter, CutterRepo>{
+public class WorkplaceRestService extends AbstractRestService<Workplace, WorkplaceRepo> {
 
-    public CutterRestService(CutterRepo repository) {
+    public WorkplaceRestService(WorkplaceRepo repository) {
         super(repository);
     }
 
     @Override
-    public List<Cutter> list() {
+    public List<Workplace> list() {
         return super.repository.findAllByOrderById();
     }
 
     @Override
-    public Cutter getById(Long id) {
+    public Workplace getById(Long id) {
         return repository.findById(id).orElseThrow(NotFoundException::new);
     }
 
     @Override
-    public Cutter create(Cutter item) {
+    public Workplace create(Workplace item) {
         item.setId(null);
         return repository.save(item);
     }
 
     @Override
-    public Cutter update(Long id, Cutter item) {
-        Cutter itemFromDB = repository.findById(id).orElseThrow(NotFoundException::new);
+    public Workplace update(Long id, Workplace item) {
+        Workplace itemFromDB = repository.findById(id).orElseThrow(NotFoundException::new);
         BeanUtils.copyProperties(item, itemFromDB, "id");
         return repository.save(itemFromDB);
     }

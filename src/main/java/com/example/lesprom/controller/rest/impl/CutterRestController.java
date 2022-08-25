@@ -1,48 +1,46 @@
-package com.example.lesprom.controller.rest;
+package com.example.lesprom.controller.rest.impl;
 
+import com.example.lesprom.controller.rest.AbstractRestController;
 import com.example.lesprom.dto.cutter.Cutter;
 import com.example.lesprom.mapper.CutterMapper;
-import com.example.lesprom.service.rest.CutterRestService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import com.example.lesprom.service.rest.impl.CutterRestService;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/cutter")
-public class CutterRestController {
+public class CutterRestController extends AbstractRestController<Cutter, CutterRestService> {
 
-    private final CutterRestService service;
-
-    @Autowired
     public CutterRestController(CutterRestService service) {
-        this.service = service;
+        super(service);
     }
 
-    @GetMapping
+    @Override
     public List<Cutter> list() {
         return CutterMapper.INSTANCE.mapList(service.list());
     }
 
-    @GetMapping("{id}")
-    public Cutter getOne(@PathVariable Long id) {
+    @Override
+    public Cutter getOne(Long id) {
         return CutterMapper.INSTANCE.mapSingle(service.getById(id));
     }
 
-    @PostMapping
-    public Cutter create(@RequestBody Cutter modelDto) {
+    @Override
+    public Cutter create(Cutter modelDto) {
         com.example.lesprom.entity.Cutter model = CutterMapper.INSTANCE.mapSingle(modelDto);
         return CutterMapper.INSTANCE.mapSingle(service.create(model));
     }
 
-    @PutMapping("{id}")
-    public Cutter update(@PathVariable Long id, @RequestBody Cutter modelDto) {
+    @Override
+    public Cutter update(Long id, Cutter modelDto) {
         com.example.lesprom.entity.Cutter model = CutterMapper.INSTANCE.mapSingle(modelDto);
         return CutterMapper.INSTANCE.mapSingle(service.update(id, model));
     }
 
-    @DeleteMapping("{id}")
-    public void delete(@PathVariable Long id) {
+    @Override
+    public void delete(Long id) {
         service.delete(id);
     }
 

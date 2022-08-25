@@ -1,48 +1,46 @@
-package com.example.lesprom.controller.rest;
+package com.example.lesprom.controller.rest.impl;
 
+import com.example.lesprom.controller.rest.AbstractRestController;
 import com.example.lesprom.dto.baguette.Baguette;
 import com.example.lesprom.mapper.BaguetteMapper;
-import com.example.lesprom.service.rest.BaguetteRestService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import com.example.lesprom.service.rest.impl.BaguetteRestService;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/baguette")
-public class BaguetteRestController {
+public class BaguetteRestController extends AbstractRestController<Baguette, BaguetteRestService> {
 
-    private final BaguetteRestService service;
-
-    @Autowired
     public BaguetteRestController(BaguetteRestService service) {
-        this.service = service;
+        super(service);
     }
 
-    @GetMapping
+    @Override
     public List<Baguette> list() {
         return BaguetteMapper.INSTANCE.mapList(service.list());
     }
 
-    @GetMapping("{id}")
-    public Baguette getOne(@PathVariable Long id) {
+    @Override
+    public Baguette getOne(Long id) {
         return BaguetteMapper.INSTANCE.mapSingle(service.getById(id));
     }
 
-    @PostMapping
-    public Baguette create(@RequestBody Baguette modelDto) {
+    @Override
+    public Baguette create(Baguette modelDto) {
         com.example.lesprom.entity.Baguette model = BaguetteMapper.INSTANCE.mapSingle(modelDto);
         return BaguetteMapper.INSTANCE.mapSingle(service.create(model));
     }
 
-    @PutMapping("{id}")
-    public Baguette update(@PathVariable Long id, @RequestBody Baguette modelDto) {
+    @Override
+    public Baguette update(Long id, Baguette modelDto) {
         com.example.lesprom.entity.Baguette model = BaguetteMapper.INSTANCE.mapSingle(modelDto);
         return BaguetteMapper.INSTANCE.mapSingle(service.update(id, model));
     }
 
-    @DeleteMapping("{id}")
-    public void delete(@PathVariable Long id) {
+    @Override
+    public void delete(Long id) {
         service.delete(id);
     }
 

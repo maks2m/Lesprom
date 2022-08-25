@@ -1,39 +1,40 @@
-package com.example.lesprom.service.rest;
+package com.example.lesprom.service.rest.impl;
 
-import com.example.lesprom.entity.Workplace;
+import com.example.lesprom.entity.Baguette;
 import com.example.lesprom.exception.NotFoundException;
-import com.example.lesprom.repo.WorkplaceRepo;
+import com.example.lesprom.repo.BaguetteRepo;
+import com.example.lesprom.service.rest.AbstractRestService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class WorkplaceRestService extends AbstractRestService<Workplace, WorkplaceRepo> {
+public class BaguetteRestService extends AbstractRestService<Baguette, BaguetteRepo> {
 
-    public WorkplaceRestService(WorkplaceRepo repository) {
+    public BaguetteRestService(BaguetteRepo repository) {
         super(repository);
     }
 
     @Override
-    public List<Workplace> list() {
+    public List<Baguette> list() {
         return super.repository.findAllByOrderById();
     }
 
     @Override
-    public Workplace getById(Long id) {
+    public Baguette getById(Long id) {
         return repository.findById(id).orElseThrow(NotFoundException::new);
     }
 
     @Override
-    public Workplace create(Workplace item) {
+    public Baguette create(Baguette item) {
         item.setId(null);
         return repository.save(item);
     }
 
     @Override
-    public Workplace update(Long id, Workplace item) {
-        Workplace itemFromDB = repository.findById(id).orElseThrow(NotFoundException::new);
+    public Baguette update(Long id, Baguette item) {
+        Baguette itemFromDB = repository.findById(id).orElseThrow(NotFoundException::new);
         BeanUtils.copyProperties(item, itemFromDB, "id");
         return repository.save(itemFromDB);
     }
@@ -42,4 +43,5 @@ public class WorkplaceRestService extends AbstractRestService<Workplace, Workpla
     public void delete(Long id) {
         repository.deleteById(id);
     }
+
 }

@@ -1,4 +1,4 @@
-package com.example.lesprom.service.rest;
+package com.example.lesprom.service.rest.impl;
 
 import com.example.lesprom.entity.*;
 import com.example.lesprom.exception.NotFoundException;
@@ -6,6 +6,7 @@ import com.example.lesprom.repo.BaguetteRepo;
 import com.example.lesprom.repo.CutterRepo;
 import com.example.lesprom.repo.OrderRepo;
 import com.example.lesprom.repo.WorkplaceRepo;
+import com.example.lesprom.service.rest.AbstractRestService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class OrderRestService extends AbstractRestService<Order, OrderRepo>{
+public class OrderRestService extends AbstractRestService<Order, OrderRepo> {
 
     private final BaguetteRepo baguetteRepo;
     private final CutterRepo cutterRepo;

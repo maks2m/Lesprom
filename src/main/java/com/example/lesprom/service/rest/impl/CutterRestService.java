@@ -1,39 +1,40 @@
-package com.example.lesprom.service.rest;
+package com.example.lesprom.service.rest.impl;
 
-import com.example.lesprom.entity.Baguette;
+import com.example.lesprom.entity.Cutter;
 import com.example.lesprom.exception.NotFoundException;
-import com.example.lesprom.repo.BaguetteRepo;
+import com.example.lesprom.repo.CutterRepo;
+import com.example.lesprom.service.rest.AbstractRestService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class BaguetteRestService extends AbstractRestService<Baguette, BaguetteRepo> {
+public class CutterRestService extends AbstractRestService<Cutter, CutterRepo> {
 
-    public BaguetteRestService(BaguetteRepo repository) {
+    public CutterRestService(CutterRepo repository) {
         super(repository);
     }
 
     @Override
-    public List<Baguette> list() {
+    public List<Cutter> list() {
         return super.repository.findAllByOrderById();
     }
 
     @Override
-    public Baguette getById(Long id) {
+    public Cutter getById(Long id) {
         return repository.findById(id).orElseThrow(NotFoundException::new);
     }
 
     @Override
-    public Baguette create(Baguette item) {
+    public Cutter create(Cutter item) {
         item.setId(null);
         return repository.save(item);
     }
 
     @Override
-    public Baguette update(Long id, Baguette item) {
-        Baguette itemFromDB = repository.findById(id).orElseThrow(NotFoundException::new);
+    public Cutter update(Long id, Cutter item) {
+        Cutter itemFromDB = repository.findById(id).orElseThrow(NotFoundException::new);
         BeanUtils.copyProperties(item, itemFromDB, "id");
         return repository.save(itemFromDB);
     }
@@ -42,5 +43,4 @@ public class BaguetteRestService extends AbstractRestService<Baguette, BaguetteR
     public void delete(Long id) {
         repository.deleteById(id);
     }
-
 }

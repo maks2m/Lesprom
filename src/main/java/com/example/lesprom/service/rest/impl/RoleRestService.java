@@ -1,15 +1,16 @@
-package com.example.lesprom.service.rest;
+package com.example.lesprom.service.rest.impl;
 
 import com.example.lesprom.entity.Role;
 import com.example.lesprom.exception.NotFoundException;
 import com.example.lesprom.repo.RoleRepo;
+import com.example.lesprom.service.rest.AbstractRestService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class RoleRestService extends AbstractRestService<Role, RoleRepo>{
+public class RoleRestService extends AbstractRestService<Role, RoleRepo> {
 
     public RoleRestService(RoleRepo repository) {
         super(repository);

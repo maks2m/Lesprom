@@ -1,4 +1,4 @@
-package com.example.lesprom.service.rest;
+package com.example.lesprom.service.rest.impl;
 
 import com.example.lesprom.entity.Role;
 import com.example.lesprom.entity.User;
@@ -6,7 +6,9 @@ import com.example.lesprom.exception.NotFoundException;
 import com.example.lesprom.exception.NotUniqueUsernameException;
 import com.example.lesprom.repo.RoleRepo;
 import com.example.lesprom.repo.UserRepo;
+import com.example.lesprom.service.rest.AbstractRestService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -16,10 +18,12 @@ import java.util.stream.Collectors;
 @Service
 public class UserRestService extends AbstractRestService<User, UserRepo> {
 
+    private final PasswordEncoder passwordEncoder;
     private final RoleRepo roleRepo;
 
-    public UserRestService(UserRepo repository, RoleRepo roleRepo) {
+    public UserRestService(UserRepo repository, PasswordEncoder passwordEncoder, RoleRepo roleRepo) {
         super(repository);
+        this.passwordEncoder = passwordEncoder;
         this.roleRepo = roleRepo;
     }
 
@@ -42,6 +46,7 @@ public class UserRestService extends AbstractRestService<User, UserRepo> {
         checkUniqueUsername(item);
         item.setId(null);
         setChildren(item);
+        item.setPassword(passwordEncoder.encode(item.getPassword()));
         return super.repository.save(item);
     }
 
@@ -51,6 +56,7 @@ public class UserRestService extends AbstractRestService<User, UserRepo> {
         User itemFromDB = repository.findById(id).orElseThrow(NotFoundException::new);
         setChildren(item);
         BeanUtils.copyProperties(item, itemFromDB, "id");
+        itemFromDB.setPassword(passwordEncoder.encode(itemFromDB.getPassword()));
         return repository.save(itemFromDB);
     }
 

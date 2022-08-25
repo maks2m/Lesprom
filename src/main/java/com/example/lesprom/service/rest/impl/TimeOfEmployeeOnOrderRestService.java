@@ -1,10 +1,11 @@
-package com.example.lesprom.service.rest;
+package com.example.lesprom.service.rest.impl;
 
 import com.example.lesprom.entity.TimeOfEmployeeOnOrder;
 import com.example.lesprom.exception.NotFoundException;
 import com.example.lesprom.repo.EmployeeRepo;
 import com.example.lesprom.repo.OrderRepo;
 import com.example.lesprom.repo.TimeOfEmployeeOnOrderRepo;
+import com.example.lesprom.service.rest.AbstractRestService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 

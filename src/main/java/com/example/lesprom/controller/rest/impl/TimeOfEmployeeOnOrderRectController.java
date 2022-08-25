@@ -1,48 +1,47 @@
-package com.example.lesprom.controller.rest;
+package com.example.lesprom.controller.rest.impl;
 
+import com.example.lesprom.controller.rest.AbstractRestController;
 import com.example.lesprom.dto.timeofemployeeonorder.TimeOfEmployeeOnOrder;
 import com.example.lesprom.mapper.TimeOfEmployeeOnOrderMapper;
-import com.example.lesprom.service.rest.TimeOfEmployeeOnOrderRestService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import com.example.lesprom.service.rest.impl.TimeOfEmployeeOnOrderRestService;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/time-of-employee-on-order")
-public class TimeOfEmployeeOnOrderRectController {
+public class TimeOfEmployeeOnOrderRectController extends AbstractRestController<TimeOfEmployeeOnOrder, TimeOfEmployeeOnOrderRestService> {
 
-    private final TimeOfEmployeeOnOrderRestService service;
 
-    @Autowired
-    public TimeOfEmployeeOnOrderRectController(TimeOfEmployeeOnOrderRestService service) {
-        this.service = service;
+    protected TimeOfEmployeeOnOrderRectController(TimeOfEmployeeOnOrderRestService service) {
+        super(service);
     }
 
-    @GetMapping
+    @Override
     public List<TimeOfEmployeeOnOrder> list() {
         return TimeOfEmployeeOnOrderMapper.INSTANCE.mapList(service.list());
     }
 
-    @GetMapping("{id}")
-    public TimeOfEmployeeOnOrder getOne(@PathVariable Long id) {
+    @Override
+    public TimeOfEmployeeOnOrder getOne(Long id) {
         return TimeOfEmployeeOnOrderMapper.INSTANCE.mapSingle(service.getById(id));
     }
 
-    @PostMapping
-    public TimeOfEmployeeOnOrder create(@RequestBody TimeOfEmployeeOnOrder modelDto) {
+    @Override
+    public TimeOfEmployeeOnOrder create(TimeOfEmployeeOnOrder modelDto) {
         com.example.lesprom.entity.TimeOfEmployeeOnOrder model = TimeOfEmployeeOnOrderMapper.INSTANCE.mapSingle(modelDto);
         return TimeOfEmployeeOnOrderMapper.INSTANCE.mapSingle(service.create(model));
     }
 
-    @PutMapping("{id}")
-    public TimeOfEmployeeOnOrder update(@PathVariable Long id, @RequestBody TimeOfEmployeeOnOrder modelDto) {
+    @Override
+    public TimeOfEmployeeOnOrder update(Long id, TimeOfEmployeeOnOrder modelDto) {
         com.example.lesprom.entity.TimeOfEmployeeOnOrder model = TimeOfEmployeeOnOrderMapper.INSTANCE.mapSingle(modelDto);
         return TimeOfEmployeeOnOrderMapper.INSTANCE.mapSingle(service.update(id, model));
     }
 
-    @DeleteMapping("{id}")
-    public void delete(@PathVariable Long id) {
+    @Override
+    public void delete(Long id) {
         service.delete(id);
     }
 

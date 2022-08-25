@@ -1,4 +1,4 @@
-package com.example.lesprom.service.rest;
+package com.example.lesprom.service.rest.impl;
 
 import com.example.lesprom.entity.User;
 import com.example.lesprom.entity.UserDetailsImpl;
