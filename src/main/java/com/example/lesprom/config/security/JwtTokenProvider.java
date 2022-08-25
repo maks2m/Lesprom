@@ -1,14 +1,12 @@
 package com.example.lesprom.config.security;
 
-import com.example.lesprom.service.UserDetailsServiceImpl;
+import com.example.lesprom.service.rest.impl.UserDetailsRestServiceImpl;
 import io.jsonwebtoken.*;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -19,7 +17,7 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    private final UserDetailsServiceImpl userDetailsService;
+    private final UserDetailsRestServiceImpl userDetailsRestService;
 
     @Value("${jwt.secret}")
     private String secretKey;
@@ -28,8 +26,8 @@ public class JwtTokenProvider {
     @Value("${jwt.expiration}")
     private long validityInMilliseconds;
 
-    public JwtTokenProvider(UserDetailsServiceImpl userDetailsService) {
-        this.userDetailsService = userDetailsService;
+    public JwtTokenProvider(UserDetailsRestServiceImpl userDetailsRestService) {
+        this.userDetailsRestService = userDetailsRestService;
     }
 
     @PostConstruct
@@ -61,7 +59,7 @@ public class JwtTokenProvider {
     }
 
     public Authentication getAuthentication(String token) {
-        UserDetails userDetails = this.userDetailsService.loadUserByUsername(getUsername(token));
+        UserDetails userDetails = this.userDetailsRestService.loadUserByUsername(getUsername(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
