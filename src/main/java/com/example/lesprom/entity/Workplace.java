@@ -23,6 +23,16 @@ public class Workplace {
     @Column(name = "name_workplace")
     private String nameWorkplace;
 
+    /**
+     * последовательность выполнения заказ на данном участке
+     * 0 - на данном участке операции по заказу выполняются в первую очередь
+     * 1 - на данном участке операции по заказу выполняются во вторую очередь
+     * ....
+     * n - на данном участке операции по заказу выполняются в n-ную очередь
+     */
+    @Column(name = "sequence")
+    private Integer sequence;
+
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinTable(name = "employee_workplace",
             joinColumns = @JoinColumn(name = "id_workplace", foreignKey = @ForeignKey(name = "buffer_workplace_fk")),

@@ -6,4 +6,5 @@ import lombok.Data;
 public class Workplace {
     private Long id;
     private String nameWorkplace;
+    private Integer sequence;
 }
