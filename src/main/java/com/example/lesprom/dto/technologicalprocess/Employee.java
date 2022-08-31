@@ -1,4 +1,4 @@
-package com.example.lesprom.dto.order;
+package com.example.lesprom.dto.technologicalprocess;
 
 import lombok.Data;
 

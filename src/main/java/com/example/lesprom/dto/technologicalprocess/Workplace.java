@@ -1,4 +1,4 @@
-package com.example.lesprom.dto.order;
+package com.example.lesprom.dto.technologicalprocess;
 
 import lombok.Data;
 
@@ -6,5 +6,4 @@ import lombok.Data;
 public class Workplace {
     private Long id;
     private String nameWorkplace;
-    private Integer sequence;
 }

@@ -8,6 +8,5 @@ import java.util.Set;
 public class Workplace {
     private Long id;
     private String nameWorkplace;
-    private Integer sequence;
     private Set<Employee> employees;
 }

@@ -1,10 +1,11 @@
 package com.example.lesprom.service.rest.impl;
 
-import com.example.lesprom.entity.TimeOfEmployeeOnOrder;
+import com.example.lesprom.entity.TechnologicalProcess;
 import com.example.lesprom.exception.NotFoundException;
 import com.example.lesprom.repo.EmployeeRepo;
 import com.example.lesprom.repo.OrderRepo;
-import com.example.lesprom.repo.TimeOfEmployeeOnOrderRepo;
+import com.example.lesprom.repo.TechnologicalProcessRepo;
+import com.example.lesprom.repo.WorkplaceRepo;
 import com.example.lesprom.service.rest.AbstractRestService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -12,37 +13,39 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TimeOfEmployeeOnOrderRestService extends AbstractRestService<TimeOfEmployeeOnOrder, TimeOfEmployeeOnOrderRepo> {
+public class TechnologicalProcessService extends AbstractRestService<TechnologicalProcess, TechnologicalProcessRepo> {
 
     private final EmployeeRepo employeeRepo;
     private final OrderRepo orderRepo;
+    private final WorkplaceRepo workplaceRepo;
 
-    public TimeOfEmployeeOnOrderRestService(TimeOfEmployeeOnOrderRepo repository, EmployeeRepo employeeRepo, OrderRepo orderRepo) {
+    public TechnologicalProcessService(TechnologicalProcessRepo repository, EmployeeRepo employeeRepo, OrderRepo orderRepo, WorkplaceRepo workplaceRepo) {
         super(repository);
         this.employeeRepo = employeeRepo;
         this.orderRepo = orderRepo;
+        this.workplaceRepo = workplaceRepo;
     }
 
     @Override
-    public List<TimeOfEmployeeOnOrder> list() {
+    public List<TechnologicalProcess> list() {
         return super.repository.findAllByOrderById();
     }
 
     @Override
-    public TimeOfEmployeeOnOrder getById(Long id) {
+    public TechnologicalProcess getById(Long id) {
         return repository.findById(id).orElseThrow(NotFoundException::new);
     }
 
     @Override
-    public TimeOfEmployeeOnOrder create(TimeOfEmployeeOnOrder item) {
+    public TechnologicalProcess create(TechnologicalProcess item) {
         item.setId(null);
         setChildren(item);
         return repository.save(item);
     }
 
     @Override
-    public TimeOfEmployeeOnOrder update(Long id, TimeOfEmployeeOnOrder item) {
-        TimeOfEmployeeOnOrder itemFromDB = repository.findById(id).orElseThrow(NotFoundException::new);
+    public TechnologicalProcess update(Long id, TechnologicalProcess item) {
+        TechnologicalProcess itemFromDB = repository.findById(id).orElseThrow(NotFoundException::new);
         setChildren(item);
         BeanUtils.copyProperties(item, itemFromDB, "id");
         return repository.save(itemFromDB);
@@ -57,9 +60,11 @@ public class TimeOfEmployeeOnOrderRestService extends AbstractRestService<TimeOf
      * функция поиска в БД и восстановления дочерних сущностей в родительской по ID
      * @param item - сущность, требующая восстановления дочерних сущностей
      */
-    private void setChildren(TimeOfEmployeeOnOrder item) {
+    private void setChildren(TechnologicalProcess item) {
         item.setEmployee(employeeRepo.findById(item.getEmployee().getId()).orElseThrow(NotFoundException::new));
         item.setOrder(orderRepo.findById(item.getOrder().getId()).orElseThrow(NotFoundException::new));
+        item.setWorkplace(workplaceRepo.findById(item.getWorkplace().getId()).orElseThrow(NotFoundException::new));
     }
+
 
 }

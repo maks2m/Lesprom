@@ -2,10 +2,7 @@ package com.example.lesprom.service.rest.impl;
 
 import com.example.lesprom.entity.*;
 import com.example.lesprom.exception.NotFoundException;
-import com.example.lesprom.repo.BaguetteRepo;
-import com.example.lesprom.repo.CutterRepo;
-import com.example.lesprom.repo.OrderRepo;
-import com.example.lesprom.repo.WorkplaceRepo;
+import com.example.lesprom.repo.*;
 import com.example.lesprom.service.rest.AbstractRestService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
@@ -19,13 +16,13 @@ public class OrderRestService extends AbstractRestService<Order, OrderRepo> {
 
     private final BaguetteRepo baguetteRepo;
     private final CutterRepo cutterRepo;
-    private final WorkplaceRepo workplaceRepo;
+    private final TechnologicalProcessRepo technologicalProcessRepo;
 
-    public OrderRestService(OrderRepo repository, BaguetteRepo baguetteRepo, CutterRepo cutterRepo, WorkplaceRepo workplaceRepo) {
+    public OrderRestService(OrderRepo repository, BaguetteRepo baguetteRepo, CutterRepo cutterRepo, TechnologicalProcessRepo technologicalProcessRepo) {
         super(repository);
         this.baguetteRepo = baguetteRepo;
         this.cutterRepo = cutterRepo;
-        this.workplaceRepo = workplaceRepo;
+        this.technologicalProcessRepo = technologicalProcessRepo;
     }
 
     @Override
@@ -63,9 +60,12 @@ public class OrderRestService extends AbstractRestService<Order, OrderRepo> {
      * @param item - сущность, требующая восстановления дочерних сущностей
      */
     private void setChildren(Order item) {
-        item.setBaguettes(new HashSet<>(baguetteRepo.findAllById(item.getBaguettes().stream().map(Baguette::getId).collect(Collectors.toSet()))));
-        item.setCutters(new HashSet<>(cutterRepo.findAllById(item.getCutters().stream().map(Cutter::getId).collect(Collectors.toSet()))));
-        item.setWorkplaces(new HashSet<>(workplaceRepo.findAllById(item.getWorkplaces().stream().map(Workplace::getId).collect(Collectors.toSet()))));
+        item.setBaguettes(new HashSet<>(baguetteRepo
+                .findAllById(item.getBaguettes().stream().map(Baguette::getId).collect(Collectors.toSet()))));
+        item.setCutters(new HashSet<>(cutterRepo
+                .findAllById(item.getCutters().stream().map(Cutter::getId).collect(Collectors.toSet()))));
+        item.setTechnologicalProcesses(new HashSet<>(technologicalProcessRepo
+                .findAllById(item.getTechnologicalProcesses().stream().map(TechnologicalProcess::getId).collect(Collectors.toSet()))));
     }
 
 }

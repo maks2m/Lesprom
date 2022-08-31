@@ -1,4 +1,4 @@
-package com.example.lesprom.dto.timeofemployeeonorder;
+package com.example.lesprom.dto.technologicalprocess;
 
 import lombok.Data;
 

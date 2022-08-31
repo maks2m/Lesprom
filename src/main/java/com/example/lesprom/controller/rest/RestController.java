@@ -4,20 +4,20 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-public interface RestController<E> {
+public interface RestController<D> {
 
     @GetMapping
-    List<E> list();
+    List<D> list();
 
     @GetMapping("{id}")
-    E getOne(@PathVariable("id") Long id);
+    D getOne(@PathVariable("id") Long id);
 
     @PostMapping
-    E create(@RequestBody E modelDto);
+    D create(@RequestBody D modelDto);
 
     @PutMapping("{id}")
-    E update(@PathVariable("id") Long id,
-             @RequestBody E modelDto);
+    D update(@PathVariable("id") Long id,
+             @RequestBody D modelDto);
 
     @DeleteMapping("{id}")
     void delete(@PathVariable("id") Long id);

@@ -106,11 +106,5 @@ public class Order {
     private Set<Cutter> cutters = new HashSet<>();
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<TimeOfEmployeeOnOrder> timeOfEmployeeOnOrders = new HashSet<>();
-
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
-    @JoinTable(name = "order_workplace",
-            joinColumns = @JoinColumn(name = "id_order", foreignKey = @ForeignKey(name = "buffer_order_fk")),
-            inverseJoinColumns = @JoinColumn(name = "id_workplace", foreignKey = @ForeignKey(name = "buffer_workplace_fk")))
-    private Set<Workplace> workplaces = new HashSet<>();
+    private Set<TechnologicalProcess> technologicalProcesses = new HashSet<>();
 }

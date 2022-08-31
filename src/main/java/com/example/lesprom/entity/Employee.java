@@ -23,8 +23,8 @@ public class Employee {
     @Column(name = "full_name")
     private String fullName;
 
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<TimeOfEmployeeOnOrder> timeOfEmployeeOnOrders = new HashSet<>();
+    @OneToMany(mappedBy = "employee", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
+    private Set<TechnologicalProcess> technologicalProcesses = new HashSet<>();
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     @JoinTable(name = "employee_workplace",

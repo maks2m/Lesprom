@@ -24,6 +24,6 @@ public class Order {
 
     private Set<Baguette> baguettes = new HashSet<>();
     private Set<Cutter> cutters = new HashSet<>();
-    private Set<Workplace> workplaces = new HashSet<>();
-    private Set<TimeOfEmployeeOnOrder> timeOfEmployeeOnOrders = new HashSet<>();
+    private Set<TechnologicalProcess> technologicalProcesses = new HashSet<>();
+
 }
