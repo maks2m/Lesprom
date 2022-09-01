@@ -23,9 +23,6 @@ public class Baguette {
     @Column(name = "baguette_name")
     private String baguetteName;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
-    @JoinTable(name = "order_baguette",
-            joinColumns = @JoinColumn(name = "id_baguette", foreignKey = @ForeignKey(name = "buffer1_baguette_fk")),
-            inverseJoinColumns = @JoinColumn(name = "id_order", foreignKey = @ForeignKey(name = "buffer1_order_fk")))
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY, mappedBy = "baguettes")
     private Set<Order> orders = new HashSet<>();
 }

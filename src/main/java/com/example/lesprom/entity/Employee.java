@@ -26,10 +26,7 @@ public class Employee {
     @OneToMany(mappedBy = "employee", cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     private Set<TechnologicalProcess> technologicalProcesses = new HashSet<>();
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
-    @JoinTable(name = "employee_workplace",
-            joinColumns = @JoinColumn(name = "id_employee", foreignKey = @ForeignKey(name = "buffer_employee_fk")),
-            inverseJoinColumns = @JoinColumn(name = "id_workplace", foreignKey = @ForeignKey(name = "buffer_workplace_fk")))
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY, mappedBy = "employees")
     private Set<Workplace> workplaces = new HashSet<>();
 
 }

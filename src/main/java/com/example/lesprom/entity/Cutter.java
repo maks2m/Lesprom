@@ -23,10 +23,7 @@ public class Cutter {
     @Column(name = "cutter_name")
     private String cutterName;
 
-    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
-    @JoinTable(name = "order_cutter",
-            joinColumns = @JoinColumn(name = "id_cutter", foreignKey = @ForeignKey(name = "buffer2_cutter_fk")),
-            inverseJoinColumns = @JoinColumn(name = "id_order", foreignKey = @ForeignKey(name = "buffer2_order_fk")))
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.LAZY, mappedBy = "cutters")
     private Set<Order> orders = new HashSet<>();
 
 }
