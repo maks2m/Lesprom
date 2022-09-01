@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "technological_process")
@@ -20,10 +20,10 @@ public class TechnologicalProcess {
     private Long id;
 
     @Column(name = "time_start_work")
-    private LocalDateTime timeStartWork;
+    private Date timeStartWork;
 
     @Column(name = "time_finish_work")
-    private LocalDateTime timeFinishWork;
+    private Date timeFinishWork;
 
     @Column(name = "operation_code")
     private Integer operationCode;

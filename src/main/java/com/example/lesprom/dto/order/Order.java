@@ -2,7 +2,7 @@ package com.example.lesprom.dto.order;
 
 import lombok.Data;
 
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -11,8 +11,8 @@ public class Order {
     private Long id;
     private String numberOrder;
     private String numberOrderOther;
-    private LocalDate startDate;
-    private LocalDate finishDate;
+    private Date startDate;
+    private Date finishDate;
     private String duty;
     private String color;
     private Float woodMass;

@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,13 +37,13 @@ public class Order {
      * дата начала работ по заказу
      */
     @Column(name = "start_date")
-    private LocalDate startDate;
+    private Date startDate;
 
     /**
      * дата окончания работ по заказу
      */
     @Column(name = "finish_date")
-    private LocalDate finishDate;
+    private Date finishDate;
 
     /**
      * долг по заказу
