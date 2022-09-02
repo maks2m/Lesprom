@@ -3,7 +3,6 @@ package com.example.lesprom.dto.order;
 import lombok.Data;
 
 @Data
-public class TechnologicalProcess {
+public class Workplace {
     private Long id;
-    private Workplace workplace;
 }

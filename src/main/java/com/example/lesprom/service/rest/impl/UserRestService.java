@@ -52,7 +52,7 @@ public class UserRestService extends AbstractRestService<User, UserRepo> {
 
     @Override
     public User update(Long id, User item) {
-        checkUniqueUsername(item);
+        //checkUniqueUsername(item);
         User itemFromDB = repository.findById(id).orElseThrow(NotFoundException::new);
         setChildren(item);
         BeanUtils.copyProperties(item, itemFromDB, "id");
