@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
+
 public class UserRestController extends AbstractRestController<User, UserRestService> {
 
     protected UserRestController(UserRestService service) {

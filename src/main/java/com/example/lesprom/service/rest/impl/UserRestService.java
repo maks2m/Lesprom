@@ -33,12 +33,16 @@ public class UserRestService extends AbstractRestService<User, UserRepo> {
 
     @Override
     public List<User> list() {
-        return super.repository.findAllByOrderById();
+        List<User> users = super.repository.findAllByOrderById();
+        users.forEach(u -> u.setPassword(""));
+        return users;
     }
 
     @Override
     public User getById(Long id) {
-        return super.repository.findById(id).orElseThrow(NotFoundException::new);
+        User user = super.repository.findById(id).orElseThrow(NotFoundException::new);
+        user.setPassword("");
+        return user;
     }
 
     @Override
@@ -47,17 +51,20 @@ public class UserRestService extends AbstractRestService<User, UserRepo> {
         item.setId(null);
         setChildren(item);
         item.setPassword(passwordEncoder.encode(item.getPassword()));
-        return super.repository.save(item);
+        User user = super.repository.save(item);
+        user.setPassword("");
+        return user;
     }
 
     @Override
     public User update(Long id, User item) {
-        //checkUniqueUsername(item);
-        User itemFromDB = repository.findById(id).orElseThrow(NotFoundException::new);
+        User itemFromDB = super.repository.findById(id).orElseThrow(NotFoundException::new);
         setChildren(item);
         BeanUtils.copyProperties(item, itemFromDB, "id");
         itemFromDB.setPassword(passwordEncoder.encode(itemFromDB.getPassword()));
-        return repository.save(itemFromDB);
+        User user = super.repository.save(itemFromDB);
+        user.setPassword("");
+        return user;
     }
 
     @Override

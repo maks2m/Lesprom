@@ -171,10 +171,10 @@ alter table if exists user_role
 
 
 insert into public.usr (password, username)
-values ('elkin', 'elkin'),
-       ('ivanov', 'ivanov'),
-       ('petrov', 'petrov'),
-       ('sidorov', 'sidorov');
+values ('admin', 'admin'),
+       ('user', 'user'),
+       ('manager', 'manager'),
+       ('technolog', 'technolog');
 
 create extension if not exists pgcrypto;
 update usr
@@ -182,14 +182,20 @@ set password = crypt(password, gen_salt('bf', 8));
 
 insert into public.role (role)
 values ('USER'),
-       ('ADMIN');
+       ('ADMIN'),
+       ('MANAGER'),
+       ('TECHNOLOG');
 
 insert into public.user_role (id_user, id_role)
 values (1, 1),
+       (1, 2),
+       (1, 3),
+       (1, 4),
        (2, 1),
        (3, 1),
+       (3, 3),
        (4, 1),
-       (1, 2);
+       (4, 4);
 
 insert into public.baguette (baguette_name)
 values ('фигурный'),
