@@ -4,6 +4,8 @@ import com.example.lesprom.controller.rest.AbstractRestController;
 import com.example.lesprom.dto.cutter.Cutter;
 import com.example.lesprom.mapper.CutterMapper;
 import com.example.lesprom.service.rest.impl.CutterRestService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,8 +20,10 @@ public class CutterRestController extends AbstractRestController<Cutter, CutterR
     }
 
     @Override
-    public List<Cutter> list() {
-        return CutterMapper.INSTANCE.mapList(service.list());
+    public Object list(Integer pageNo, Integer pageSize, String sortBy) {
+        Page<com.example.lesprom.entity.Cutter> page = service.list(pageNo, pageSize, sortBy);
+        List<Cutter> listDto = CutterMapper.INSTANCE.mapList(page.getContent());
+        return new PageImpl<>(listDto, page.getPageable(), page.getTotalElements());
     }
 
     @Override

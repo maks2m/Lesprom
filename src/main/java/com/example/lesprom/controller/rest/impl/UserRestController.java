@@ -4,6 +4,8 @@ import com.example.lesprom.controller.rest.AbstractRestController;
 import com.example.lesprom.dto.user.User;
 import com.example.lesprom.mapper.UserMapper;
 import com.example.lesprom.service.rest.impl.UserRestService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,8 +21,10 @@ public class UserRestController extends AbstractRestController<User, UserRestSer
     }
 
     @Override
-    public List<User> list() {
-        return UserMapper.INSTANCE.mapList(service.list());
+    public Object list(Integer pageNo, Integer pageSize, String sortBy) {
+        Page<com.example.lesprom.entity.User> page = service.list(pageNo, pageSize, sortBy);
+        List<User> listDto = UserMapper.INSTANCE.mapList(page.getContent());
+        return new PageImpl<>(listDto, page.getPageable(), page.getTotalElements());
     }
 
     @Override

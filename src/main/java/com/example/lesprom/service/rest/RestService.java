@@ -1,6 +1,7 @@
 package com.example.lesprom.service.rest;
 
-import java.util.List;
+import com.example.lesprom.entity.Employee;
+import org.springframework.data.domain.Page;
 
 /**
  * Интерфейс стандартного рест сервиса
@@ -10,9 +11,10 @@ public interface RestService<E> {
 
     /**
      * Метод получения списка сущностей
+     *
      * @return список сущностей
      */
-    List<E> list();
+    Page<E> list(Integer pageNo, Integer pageSize, String sortBy);
 
     /**
      * Метод получения одной сущности по ID

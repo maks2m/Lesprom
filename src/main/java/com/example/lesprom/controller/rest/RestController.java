@@ -1,13 +1,14 @@
 package com.example.lesprom.controller.rest;
 
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 public interface RestController<D> {
 
     @GetMapping
-    List<D> list();
+    Object list(@RequestParam(defaultValue = "0") Integer pageNo,
+                 @RequestParam(defaultValue = "10") Integer pageSize,
+                 @RequestParam(defaultValue = "id") String sortBy);
 
     @GetMapping("{id}")
     D getOne(@PathVariable("id") Long id);

@@ -1,16 +1,17 @@
 package com.example.lesprom.service.rest.impl;
 
-import com.example.lesprom.entity.Role;
-import com.example.lesprom.entity.User;
+import com.example.lesprom.entity.*;
 import com.example.lesprom.exception.NotFoundException;
 import com.example.lesprom.exception.NotUniqueUsernameException;
 import com.example.lesprom.repo.RoleRepo;
 import com.example.lesprom.repo.UserRepo;
 import com.example.lesprom.service.rest.AbstractRestService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,10 +33,22 @@ public class UserRestService extends AbstractRestService<User, UserRepo> {
     }
 
     @Override
-    public List<User> list() {
-        List<User> users = super.repository.findAllByOrderById();
-        users.forEach(u -> u.setPassword(""));
-        return users;
+    public Page<User> list(Integer pageNo, Integer pageSize, String sortBy) {
+        if (pageNo <= -1) {
+            Sort sortItem = Sort.by(sortBy);
+            List<User> users = repository.findAll(sortItem);
+            users.forEach(u -> u.setPassword(""));
+            return new PageImpl<>(users);
+        } else {
+            Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+            Page<User> pagedResult = repository.findAll(paging);
+            List<User> users = new ArrayList<>();
+            if (pagedResult.hasContent()) {
+                users = pagedResult.getContent();
+                users.forEach(u -> u.setPassword(""));
+            }
+            return new PageImpl<>(users, pagedResult.getPageable(), pagedResult.getTotalElements());
+        }
     }
 
     @Override

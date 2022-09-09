@@ -4,6 +4,8 @@ import com.example.lesprom.controller.rest.AbstractRestController;
 import com.example.lesprom.dto.workplace.Workplace;
 import com.example.lesprom.mapper.WorkplaceMapper;
 import com.example.lesprom.service.rest.impl.WorkplaceRestService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,8 +20,10 @@ public class WorkplaceRestController extends AbstractRestController<Workplace, W
     }
 
     @Override
-    public List<Workplace> list() {
-        return WorkplaceMapper.INSTANCE.mapList(service.list());
+    public Object list(Integer pageNo, Integer pageSize, String sortBy) {
+        Page<com.example.lesprom.entity.Workplace> page = service.list(pageNo, pageSize, sortBy);
+        List<Workplace> listDto = WorkplaceMapper.INSTANCE.mapList(page.getContent());
+        return new PageImpl<>(listDto, page.getPageable(), page.getTotalElements());
     }
 
     @Override

@@ -4,6 +4,8 @@ import com.example.lesprom.controller.rest.AbstractRestController;
 import com.example.lesprom.dto.role.Role;
 import com.example.lesprom.mapper.RoleMapper;
 import com.example.lesprom.service.rest.impl.RoleRestService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,8 +21,10 @@ public class RoleRestController extends AbstractRestController<Role, RoleRestSer
     }
 
     @Override
-    public List<Role> list() {
-        return RoleMapper.INSTANCE.mapList(service.list());
+    public Object list(Integer pageNo, Integer pageSize, String sortBy) {
+        Page<com.example.lesprom.entity.Role> page = service.list(pageNo, pageSize, sortBy);
+        List<Role> listDto = RoleMapper.INSTANCE.mapList(page.getContent());
+        return new PageImpl<>(listDto, page.getPageable(), page.getTotalElements());
     }
 
     @Override

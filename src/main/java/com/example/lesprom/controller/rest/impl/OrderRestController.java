@@ -4,6 +4,8 @@ import com.example.lesprom.controller.rest.AbstractRestController;
 import com.example.lesprom.dto.order.Order;
 import com.example.lesprom.mapper.OrderMapper;
 import com.example.lesprom.service.rest.impl.OrderRestService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,8 +21,10 @@ public class OrderRestController extends AbstractRestController<Order, OrderRest
     }
 
     @Override
-    public List<Order> list() {
-        return OrderMapper.INSTANCE.mapList(service.list());
+    public Object list(Integer pageNo, Integer pageSize, String sortBy) {
+        Page<com.example.lesprom.entity.Order> page = service.list(pageNo, pageSize, sortBy);
+        List<Order> listDto = OrderMapper.INSTANCE.mapList(page.getContent());
+        return new PageImpl<>(listDto, page.getPageable(), page.getTotalElements());
     }
 
     @Override

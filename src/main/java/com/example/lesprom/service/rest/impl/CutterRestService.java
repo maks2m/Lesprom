@@ -5,9 +5,8 @@ import com.example.lesprom.exception.NotFoundException;
 import com.example.lesprom.repo.CutterRepo;
 import com.example.lesprom.service.rest.AbstractRestService;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class CutterRestService extends AbstractRestService<Cutter, CutterRepo> {
@@ -17,8 +16,14 @@ public class CutterRestService extends AbstractRestService<Cutter, CutterRepo> {
     }
 
     @Override
-    public List<Cutter> list() {
-        return super.repository.findAllByOrderById();
+    public Page<Cutter> list(Integer pageNo, Integer pageSize, String sortBy) {
+        if (pageNo <= -1) {
+            Sort sortItem = Sort.by(sortBy);
+            return new PageImpl<>(repository.findAll(sortItem));
+        } else {
+            Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+            return repository.findAll(paging);
+        }
     }
 
     @Override

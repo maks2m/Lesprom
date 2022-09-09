@@ -4,6 +4,8 @@ import com.example.lesprom.controller.rest.AbstractRestController;
 import com.example.lesprom.dto.technologicalprocess.TechnologicalProcess;
 import com.example.lesprom.mapper.TechnologicalProcessMapper;
 import com.example.lesprom.service.rest.impl.TechnologicalProcessService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,8 +20,10 @@ public class TechnologicalProcessRestController extends AbstractRestController<T
     }
 
     @Override
-    public List<TechnologicalProcess> list() {
-        return TechnologicalProcessMapper.INSTANCE.mapList(service.list());
+    public Object list(Integer pageNo, Integer pageSize, String sortBy) {
+        Page<com.example.lesprom.entity.TechnologicalProcess> page = service.list(pageNo, pageSize, sortBy);
+        List<TechnologicalProcess> listDto = TechnologicalProcessMapper.INSTANCE.mapList(page.getContent());
+        return new PageImpl<>(listDto, page.getPageable(), page.getTotalElements());
     }
 
     @Override
