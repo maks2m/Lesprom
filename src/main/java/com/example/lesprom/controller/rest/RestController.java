@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.*;
 public interface RestController<D> {
 
     @GetMapping
-    Object list(@RequestParam(defaultValue = "0") Integer pageNo,
-                 @RequestParam(defaultValue = "10") Integer pageSize,
-                 @RequestParam(defaultValue = "id") String sortBy);
+    Object list(@RequestParam(name = "pageNo", defaultValue = "0") Integer pageNo,
+                @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize,
+                @RequestParam(name = "sortBy", defaultValue = "id") String sortBy);
 
     @GetMapping("{id}")
     D getOne(@PathVariable("id") Long id);

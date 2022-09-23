@@ -1,14 +1,19 @@
 package com.example.lesprom.service.rest.impl;
 
-import com.example.lesprom.entity.*;
+import com.example.lesprom.entity.Baguette;
+import com.example.lesprom.entity.Cutter;
+import com.example.lesprom.entity.Order;
+import com.example.lesprom.entity.TechnologicalProcess;
 import com.example.lesprom.exception.NotFoundException;
-import com.example.lesprom.repo.*;
+import com.example.lesprom.repo.BaguetteRepo;
+import com.example.lesprom.repo.CutterRepo;
+import com.example.lesprom.repo.OrderRepo;
+import com.example.lesprom.repo.TechnologicalProcessRepo;
 import com.example.lesprom.service.rest.AbstractRestService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.stream.Collectors;
 
@@ -26,6 +31,10 @@ public class OrderRestService extends AbstractRestService<Order, OrderRepo> {
         this.technologicalProcessRepo = technologicalProcessRepo;
     }
 
+    // метод отдает список заказов, отфильтрованных по конкретному участку
+    public Page<Order> listOrdersOfWorkplace(Long idWorkplace) {
+        return new PageImpl<>(repository.findAllOnWorkplace(idWorkplace));
+    }
 
     @Override
     public Page<Order> list(Integer pageNo, Integer pageSize, String sortBy) {

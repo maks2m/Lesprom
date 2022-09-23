@@ -7,6 +7,7 @@ import com.example.lesprom.service.rest.impl.OrderRestService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -18,6 +19,13 @@ public class OrderRestController extends AbstractRestController<Order, OrderRest
 
     protected OrderRestController(OrderRestService service) {
         super(service);
+    }
+
+    @RequestMapping("/sort-on-workplace")
+    public Object listOfWorkplace(@RequestParam(name = "idWorkplace") Long idWorkplace) {
+        Page<com.example.lesprom.entity.Order> page = service.listOrdersOfWorkplace(idWorkplace);
+        List<Order> listDto = OrderMapper.INSTANCE.mapList(page.getContent());
+        return new PageImpl<>(listDto, page.getPageable(), page.getTotalElements());
     }
 
     @Override
