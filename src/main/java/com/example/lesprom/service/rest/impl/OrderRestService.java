@@ -14,7 +14,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -32,8 +35,42 @@ public class OrderRestService extends AbstractRestService<Order, OrderRepo> {
     }
 
     // метод отдает список заказов, отфильтрованных по конкретному участку
+    // перенести логику сортировки и фильтрации метода в репозиторий (SQL запрос)
     public Page<Order> listOrdersOfWorkplace(Long idWorkplace) {
-        return new PageImpl<>(repository.findAllOnWorkplace(idWorkplace));
+
+        /*
+        // из фронта
+        return this.orders.filter(o => {
+
+        // ***** вывести в отдельную функцию ******
+        const sortTP = o.technologicalProcesses.sort((firstTP, secondTp) => firstTP.operationCode - secondTp.operationCode);
+        const firstSortedTP = sortTP.find(tp => tp.timeStartWork === null || tp.timeFinishWork === null);
+        // ****************************************
+
+        return o.technologicalProcesses.some(t => {
+          return t.workplace.id === this.selectedWorkplace.id &&
+              !this.isFinishWork(t) &&
+              firstSortedTP.id === t.id;
+        })
+        })
+        */
+
+
+        //List<Order> listOrdersOnWorkplace = repository.findAllOnWorkplace(idWorkplace);
+        List<Order> listOrdersOnWorkplace = repository.findAllByOrderById();
+
+        List<Order> orderList = listOrdersOnWorkplace.stream().filter(o -> {
+            List<TechnologicalProcess> sortedTP = o.getTechnologicalProcesses().stream()
+                    .sorted(Comparator.comparing(TechnologicalProcess::getOperationCode))
+                    .collect(Collectors.toList());
+            TechnologicalProcess firstSortedTP = sortedTP.stream()
+                    .filter(t -> t.getTimeStartWork() == null || t.getTimeFinishWork() == null)
+                    .findFirst().orElse(null);
+
+            return o.getTechnologicalProcesses().stream().anyMatch(t -> Objects.equals(firstSortedTP, t) && t.getWorkplace().getId() == idWorkplace);
+        }).collect(Collectors.toList());
+        System.out.println("sdfg");
+        return new PageImpl<>(orderList);
     }
 
     @Override
