@@ -40,6 +40,7 @@ public class AuthenticationRestController {
     public ResponseEntity<?> authenticate(@RequestBody AuthenticationRequest request) {
         try {
 
+
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
             User user = userRestService.findByUsername(request.getUsername());
             String token = jwtTokenProvider.createToken(request.getUsername(), user.getRoles().stream().map(Role::getRole).collect(Collectors.toList()).toString());
