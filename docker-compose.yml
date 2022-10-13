@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+
+  db:
+    image: postgres
+    restart: always
+    ports:
+      - 1111:5432
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: lesprom
+    volumes:
+      - ./src/main/resources/static/scripts:/docker-entrypoint-initdb.d
+
+  java:
+    build: .
+    ports:
+      - 8080:8080
